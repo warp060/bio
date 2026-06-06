@@ -1,0 +1,372 @@
+/* Custom Luxury Editorial Styles and Animations */
+
+:root {
+    --font-serif: "Castoro", serif;
+    --font-sans: "Public Sans", sans-serif;
+    --primary-color: #c5a880;
+    /* Luxury Champagne Gold */
+    --primary-hover: #b3956c;
+    /* Deeper Warm Gold */
+    --obsidian: #111111;
+    /* Luxury Obsidian Black */
+    --card-border: rgba(197, 168, 128, 0.22);
+    /* Soft gold-tinted border */
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* Luxury Typography overrides (Serif for titles, Sans for copy) */
+body,
+input,
+textarea,
+button,
+select,
+.attention-getter {
+    font-family: var(--font-sans) !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.text-display-title,
+.s-testimonials__header,
+.s-intro__content-title {
+    font-family: var(--font-serif) !important;
+    font-weight: 400 !important;
+    letter-spacing: 0.5px !important;
+}
+
+/* Elegant Text Logo */
+.logo-text {
+    font-family: var(--font-serif) !important;
+    font-weight: 400 !important;
+    font-size: 2.4rem;
+    letter-spacing: 3px;
+    color: var(--obsidian);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-block;
+    text-transform: uppercase;
+}
+
+.logo-text:hover {
+    color: var(--primary-color);
+    transform: translateY(-1px);
+}
+
+/* Header Active Underline - Gold Accent */
+.s-header__menu-links li a {
+    position: relative;
+    transition: color 0.3s ease !important;
+    font-family: var(--font-sans) !important;
+    letter-spacing: 1px !important;
+}
+
+.s-header__menu-links li a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 1.5px;
+    background-color: var(--primary-color);
+    transition: width 0.3s ease;
+}
+
+.s-header__menu-links li.current a {
+    color: var(--primary-color) !important;
+}
+
+.s-header__menu-links li.current a::after {
+    width: 100%;
+}
+
+/* Projects Grid Layout (Responsive) */
+.projects-grid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 3.6rem !important;
+    margin-top: 5.6rem;
+    margin-bottom: 5.6rem;
+}
+
+@media (max-width: 600px) {
+    .projects-grid {
+        grid-template-columns: 1fr !important;
+        gap: 2.8rem !important;
+    }
+}
+
+@media (min-width: 601px) and (max-width: 1023px) {
+    .projects-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 3.2rem !important;
+    }
+}
+
+@media (min-width: 1024px) {
+    .projects-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+    }
+}
+
+/* Luxury Cards */
+.card {
+    background: #ffffff !important;
+    border-radius: 12px !important;
+    border: 1px solid var(--card-border) !important;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.015) !important;
+    overflow: hidden !important;
+    transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100% !important;
+    position: relative !important;
+}
+
+.card:hover {
+    transform: translateY(-6px) !important;
+    box-shadow: 0 20px 40px rgba(197, 168, 128, 0.06) !important;
+    border-color: var(--primary-color) !important;
+}
+
+/* Card Images */
+.card img {
+    width: 100% !important;
+    height: 220px !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1) !important;
+}
+
+@media (max-width: 600px) {
+    .card img {
+        height: 180px !important;
+    }
+}
+
+.card:hover img {
+    transform: scale(1.03) !important;
+}
+
+/* Card 6 Crop Alignment */
+.tshirt-card-img {
+    object-position: left center !important;
+}
+
+/* Card Content Padding */
+.card .p-6 {
+    padding: 3.2rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    flex-grow: 1 !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    text-align: center !important;
+}
+
+@media (max-width: 600px) {
+    .card .p-6 {
+        padding: 2.4rem !important;
+    }
+}
+
+.card h2 {
+    font-family: var(--font-serif) !important;
+    font-size: 2.2rem !important;
+    font-weight: 400 !important;
+    color: var(--obsidian) !important;
+    margin-bottom: 1rem !important;
+}
+
+.card p {
+    font-size: 1.45rem !important;
+    color: #555555 !important;
+    margin-bottom: 2.8rem !important;
+    line-height: 1.6 !important;
+}
+
+/* Primary Luxury Rectangular Button (replicated from user's screenshot) */
+.view-button,
+.view-button:link,
+.view-button:visited,
+.btn-primary,
+.btn-primary:link,
+.btn-primary:visited {
+    display: inline-block !important;
+    background: #121212 !important;
+    /* Very dark charcoal/obsidian background */
+    color: var(--primary-color) !important;
+    /* Champagne Gold text */
+    font-family: var(--font-sans) !important;
+    font-weight: 600 !important;
+    font-size: 1.25rem !important;
+    padding: 1.3rem 3.4rem !important;
+    border-radius: 4px !important;
+    /* Slightly rounded corners (luxury box style) */
+    border: 1px solid rgba(255, 255, 255, 0.45) !important;
+    /* Thin Light Outline Border */
+    text-decoration: none !important;
+    text-transform: uppercase !important;
+    /* All-uppercase */
+    letter-spacing: 2.5px !important;
+    /* Wide letter spacing */
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1) !important;
+    cursor: pointer !important;
+    text-align: center !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12) !important;
+}
+
+.view-button:hover,
+.view-button:focus,
+.view-button:active,
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+    background: var(--primary-color) !important;
+    /* Shift to Champagne Gold background */
+    color: #ffffff !important;
+    /* Shift text to white */
+    border-color: var(--primary-color) !important;
+    box-shadow: 0 8px 20px rgba(197, 168, 128, 0.3) !important;
+    transform: translateY(-2px) !important;
+    text-decoration: none !important;
+}
+
+/* Secondary Luxury Rectangular Button */
+.btn-secondary,
+.btn-secondary:link,
+.btn-secondary:visited {
+    display: inline-block !important;
+    background: #252525 !important;
+    /* Charcoal background */
+    color: #ffffff !important;
+    /* White text */
+    font-family: var(--font-sans) !important;
+    font-weight: 600 !important;
+    font-size: 1.25rem !important;
+    padding: 1.3rem 3.4rem !important;
+    border-radius: 4px !important;
+    border: 1px solid rgba(197, 168, 128, 0.4) !important;
+    /* Thin Gold Border */
+    text-decoration: none !important;
+    text-transform: uppercase !important;
+    letter-spacing: 2.5px !important;
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1) !important;
+    cursor: pointer !important;
+    text-align: center !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12) !important;
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus,
+.btn-secondary:active {
+    background: var(--obsidian) !important;
+    /* Obsidian background */
+    color: var(--primary-color) !important;
+    /* Gold text */
+    border-color: var(--obsidian) !important;
+    transform: translateY(-2px) !important;
+    text-decoration: none !important;
+}
+
+/* Testimonials Slide Cards */
+.s-testimonials__slide {
+    background: #ffffff !important;
+    border: 1px solid var(--card-border) !important;
+    border-radius: 12px !important;
+    padding: 4rem !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.01) !important;
+    transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1) !important;
+    height: auto !important;
+}
+
+@media (max-width: 600px) {
+    .s-testimonials__slide {
+        padding: 2.8rem 2.2rem !important;
+    }
+
+    .s-testimonials__slide p {
+        font-size: 1.5rem !important;
+        line-height: 1.65 !important;
+        text-align: left !important;
+    }
+}
+
+.s-testimonials__slide:hover {
+    transform: translateY(-5px) !important;
+    box-shadow: 0 20px 40px rgba(197, 168, 128, 0.05) !important;
+    border-color: var(--primary-color) !important;
+}
+
+/* Author Alignment Fix (Responsive Padding) */
+.s-testimonials__author {
+    display: block !important;
+    min-height: 72px !important;
+    margin-bottom: var(--vspace-0_625) !important;
+    padding-left: 92px !important;
+    position: relative !important;
+}
+
+/* Perfect Circle Avatar Fix */
+.s-testimonials__avatar {
+    width: 72px !important;
+    height: 72px !important;
+    object-fit: cover !important;
+    border-radius: 50% !important;
+    border: 2px solid var(--primary-color) !important;
+    box-shadow: 0 4px 15px rgba(197, 168, 128, 0.15) !important;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1) !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+}
+
+.s-testimonials__slide:hover .s-testimonials__avatar {
+    transform: rotate(360deg) !important;
+}
+
+/* Author Cite Typography */
+.s-testimonials__cite strong {
+    font-size: 1.7rem !important;
+    font-weight: 600 !important;
+    color: var(--obsidian) !important;
+}
+
+.s-testimonials__cite span {
+    font-size: 1.35rem !important;
+    color: #777777 !important;
+}
+
+/* Testimonial Buttons Layout (Responsive) */
+.lern {
+    display: flex !important;
+    gap: 1.2rem !important;
+    margin-top: 2.8rem !important;
+    justify-content: center !important;
+    flex-wrap: wrap !important;
+}
+
+@media (max-width: 480px) {
+    .lern {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        width: 100% !important;
+    }
+
+    .lern a {
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+}
+
+/* Social icons hover style */
+.social-list li a:hover {
+    background: var(--primary-color) !important;
+    box-shadow: 0 6px 15px rgba(197, 168, 128, 0.2) !important;
+}
