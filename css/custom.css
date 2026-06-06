@@ -405,3 +405,25 @@ h6,
     border-right: none !important;
     background-color: rgba(17, 17, 17, 0.82) !important;
 }
+
+/* Mobile Header Height Adjustment */
+@media screen and (max-width: 900px) {
+    .s-header {
+        --header-height: 58px !important;
+        top: 1rem !important; /* Floating header on mobile */
+        padding: 0 1.5rem !important;
+    }
+
+    .s-header__inner {
+        border-radius: 8px !important; /* Tighter radius on mobile */
+    }
+
+    .s-header__block {
+        box-shadow: none !important;
+        border-bottom: none !important;
+    }
+
+    .s-header__logo {
+        left: 2.2rem !important; /* Correct padding on mobile */
+    }
+}
