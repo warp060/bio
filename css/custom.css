@@ -439,3 +439,401 @@ h6,
         padding-top: calc(var(--header-height) + 2rem) !important;
     }
 }
+
+/* ===================================================================
+ * # PREMIUM ABOUT SECTION STYLING
+ * =================================================================== */
+
+/* Profile Grid (Bio & Education) */
+.about-profile-grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 3.2rem;
+    margin-bottom: 3.2rem;
+}
+
+@media screen and (max-width: 900px) {
+    .about-profile-grid {
+        grid-template-columns: 1fr;
+        gap: 2.4rem;
+    }
+}
+
+/* Base card styling matching premium glassmorphism/luxury look */
+.about-bio-card,
+.about-education-card,
+.about-interests-card {
+    background: linear-gradient(145deg, #161616, #0c0c0c) !important;
+    border: 1px solid var(--card-border) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25) !important;
+    padding: 3.6rem !important;
+    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
+    position: relative;
+    overflow: hidden;
+}
+
+.about-bio-card::before,
+.about-education-card::before,
+.about-interests-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+    background-color: var(--primary-color);
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.about-bio-card:hover::before,
+.about-education-card:hover::before,
+.about-interests-card:hover::before {
+    transform: scaleY(1);
+}
+
+.about-bio-card:hover,
+.about-education-card:hover,
+.about-interests-card:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: 0 15px 40px rgba(197, 168, 128, 0.08) !important;
+    border-color: rgba(197, 168, 128, 0.45) !important;
+}
+
+/* Card titles */
+.about-card-subtitle {
+    font-family: var(--font-serif) !important;
+    font-size: 2.4rem !important;
+    color: var(--primary-color) !important;
+    margin-top: 0 !important;
+    margin-bottom: 2rem !important;
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+}
+
+.about-card-subtitle i {
+    font-size: 2rem;
+    color: var(--primary-color);
+}
+
+/* Bio Text */
+.about-bio-text {
+    font-family: var(--font-sans) !important;
+    font-size: 1.6rem !important;
+    line-height: 1.8 !important;
+    color: #e5e5e5 !important;
+    margin-bottom: 0 !important;
+}
+
+/* Education Card styling */
+.edu-card-header {
+    display: flex;
+    align-items: center;
+    gap: 1.6rem;
+    margin-bottom: 2rem;
+}
+
+.edu-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4.8rem;
+    height: 4.8rem;
+    border-radius: 50%;
+    background: rgba(197, 168, 128, 0.12);
+    border: 1px solid rgba(197, 168, 128, 0.3);
+    color: var(--primary-color);
+    font-size: 1.8rem;
+}
+
+.edu-card-content {
+    margin-top: 1rem;
+}
+
+.edu-degree {
+    font-family: var(--font-sans) !important;
+    font-size: 1.8rem !important;
+    font-weight: 600 !important;
+    color: #ffffff !important;
+    margin-top: 0 !important;
+    margin-bottom: 0.6rem !important;
+    line-height: 1.4 !important;
+}
+
+.edu-college {
+    font-family: var(--font-sans) !important;
+    font-size: 1.45rem !important;
+    color: var(--primary-color) !important;
+    display: block;
+    margin-bottom: 1.6rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.edu-description {
+    font-family: var(--font-sans) !important;
+    font-size: 1.45rem !important;
+    line-height: 1.7 !important;
+    color: #bbbbbb !important;
+    margin-bottom: 0 !important;
+}
+
+/* Interests Section */
+.about-interests-card {
+    margin-bottom: 3.2rem;
+    padding: 0 !important; /* Managed by grid padding internally */
+}
+
+.about-interests-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1.3fr;
+    align-items: stretch;
+}
+
+@media screen and (max-width: 900px) {
+    .about-interests-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.interests-image-wrap {
+    position: relative;
+    overflow: hidden;
+    min-height: 300px;
+    border-radius: 12px 0 0 12px;
+}
+
+@media screen and (max-width: 900px) {
+    .interests-image-wrap {
+        min-height: 240px;
+        border-radius: 12px 12px 0 0;
+    }
+}
+
+.interests-image-wrap img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.about-interests-card:hover .interests-image-wrap img {
+    transform: scale(1.05);
+}
+
+.interests-text-wrap {
+    padding: 4rem !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+@media screen and (max-width: 600px) {
+    .interests-text-wrap {
+        padding: 2.8rem 2rem !important;
+    }
+}
+
+.interest-item {
+    margin-bottom: 2.4rem;
+}
+
+.interest-item:last-child {
+    margin-bottom: 0;
+}
+
+.interest-item-title {
+    font-family: var(--font-sans) !important;
+    font-size: 1.7rem !important;
+    font-weight: 600 !important;
+    color: #ffffff !important;
+    margin-top: 0 !important;
+    margin-bottom: 0.8rem !important;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.interest-item-title i {
+    color: var(--primary-color);
+    font-size: 1.4rem;
+}
+
+.interest-item-text {
+    font-family: var(--font-sans) !important;
+    font-size: 1.45rem !important;
+    line-height: 1.65 !important;
+    color: #cccccc !important;
+    margin-bottom: 0 !important;
+}
+
+/* Experience, Awards, Skills dark block container (abb1) */
+.abb1 {
+    background: transparent !important; /* Override standard ugly dark block */
+    padding: 0 !important;
+    margin-top: 4.8rem !important;
+}
+
+/* Individual blocks style (Experience, Awards, Skills cards) */
+.s-about__block {
+    background: linear-gradient(145deg, #161616, #0c0c0c) !important;
+    border: 1px solid var(--card-border) !important;
+    border-radius: 12px !important;
+    padding: 3.6rem !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25) !important;
+    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+}
+
+.s-about__block::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+    background-color: var(--primary-color);
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.s-about__block:hover::before {
+    transform: scaleY(1);
+}
+
+.s-about__block:hover {
+    transform: translateY(-5px) !important;
+    box-shadow: 0 15px 40px rgba(197, 168, 128, 0.08) !important;
+    border-color: rgba(197, 168, 128, 0.45) !important;
+}
+
+/* Titles inside columns */
+.s-about__block-title {
+    font-family: var(--font-serif) !important;
+    font-size: 2.2rem !important;
+    color: var(--primary-color) !important;
+    margin-bottom: 2.4rem !important;
+    padding-left: 0 !important; /* Override layout padding */
+}
+
+/* Remove default sidebar vertical bar if any */
+.s-about__blocks .s-about__block-title::before {
+    display: none !important;
+}
+
+.s-about__list {
+    margin-left: 0 !important;
+}
+
+/* List items formatting */
+.s-about__list li {
+    font-family: var(--font-sans) !important;
+    font-size: 1.6rem !important;
+    font-weight: 500 !important;
+    color: #ffffff !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    padding-bottom: 1.6rem;
+    margin-bottom: 1.6rem !important;
+}
+
+.s-about__list li:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0 !important;
+}
+
+.s-about__list span {
+    font-family: var(--font-sans) !important;
+    font-size: 1.4rem !important;
+    color: #b5b5b5 !important;
+    line-height: 1.6 !important;
+    margin-top: 0.6rem !important;
+}
+
+/* Experience Links with gold hover effects */
+.s-about__list a {
+    color: #ffffff !important;
+    transition: color 0.3s ease !important;
+}
+
+.s-about__list a:hover {
+    color: var(--primary-color) !important;
+}
+
+/* Experience Buttons */
+.lern {
+    display: flex !important;
+    gap: 1.2rem !important;
+    margin-top: 2.4rem !important;
+    justify-content: flex-start !important;
+}
+
+.lern #c,
+.lern #d {
+    width: auto !important;
+    height: auto !important;
+    margin: 0 !important;
+}
+
+.btn-experience-primary,
+.btn-experience-primary:link,
+.btn-experience-primary:visited {
+    flex: 1;
+    background-color: var(--primary-color) !important;
+    color: var(--obsidian) !important;
+    font-family: var(--font-sans) !important;
+    font-size: 1.25rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 2px !important;
+    text-transform: uppercase !important;
+    padding: 1.2rem 2rem !important;
+    border-radius: 6px !important;
+    border: 1px solid var(--primary-color) !important;
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1) !important;
+    text-align: center !important;
+    box-shadow: 0 4px 15px rgba(197, 168, 128, 0.15) !important;
+}
+
+.btn-experience-primary:hover,
+.btn-experience-primary:focus {
+    background-color: transparent !important;
+    color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    box-shadow: 0 8px 25px rgba(197, 168, 128, 0.3) !important;
+    transform: translateY(-2px) !important;
+}
+
+.btn-experience-secondary,
+.btn-experience-secondary:link,
+.btn-experience-secondary:visited {
+    flex: 0 0 auto;
+    background-color: transparent !important;
+    color: #ffffff !important;
+    font-family: var(--font-sans) !important;
+    font-size: 1.25rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 2px !important;
+    text-transform: uppercase !important;
+    padding: 1.2rem 2.4rem !important;
+    border-radius: 6px !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1) !important;
+    text-align: center !important;
+}
+
+.btn-experience-secondary:hover,
+.btn-experience-secondary:focus {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    transform: translateY(-2px) !important;
+}
