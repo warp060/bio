@@ -45,18 +45,18 @@ h6,
 .logo-text {
     font-family: var(--font-serif) !important;
     font-weight: 400 !important;
-    font-size: 2.4rem;
-    letter-spacing: 3px;
-    color: var(--obsidian);
-    text-decoration: none;
-    transition: all 0.3s ease;
-    display: inline-block;
-    text-transform: uppercase;
+    font-size: 2.2rem !important;
+    letter-spacing: 4px !important;
+    color: #ffffff !important; /* Premium White for Dark Header */
+    text-decoration: none !important;
+    transition: all 0.3s ease !important;
+    display: inline-block !important;
+    text-transform: uppercase !important;
 }
 
 .logo-text:hover {
-    color: var(--primary-color);
-    transform: translateY(-1px);
+    color: var(--primary-color) !important; /* Gold on Hover */
+    transform: translateY(-1px) !important;
 }
 
 /* Header Active Underline - Gold Accent */
@@ -369,4 +369,39 @@ h6,
 .social-list li a:hover {
     background: var(--primary-color) !important;
     box-shadow: 0 6px 15px rgba(197, 168, 128, 0.2) !important;
+}
+
+/* Premium Floating Glassmorphic Header Nav */
+.s-header__inner {
+    background-color: rgba(17, 17, 17, 0.75) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    border: 1px solid rgba(197, 168, 128, 0.12) !important; /* Elegant gold tint border */
+    border-radius: 12px !important; /* Slightly rounded float bar */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
+    margin: 0 auto !important;
+    max-width: var(--width-grid-max) !important;
+    transition: all 0.35s ease !important;
+}
+
+/* Make s-header itself floating properly */
+.s-header {
+    top: 2rem !important; /* Float a bit lower from the top */
+    padding: 0 2rem !important;
+}
+
+/* Adjust s-header sticky styles to keep the glass theme */
+.s-header.sticky {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    top: 0 !important;
+    padding: 0 !important;
+}
+
+.s-header.sticky .s-header__inner {
+    border-radius: 0 !important; /* Solid edges when sticky/scrolled at the top */
+    border-top: none !important;
+    border-left: none !important;
+    border-right: none !important;
+    background-color: rgba(17, 17, 17, 0.82) !important;
 }
