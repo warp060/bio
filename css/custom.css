@@ -478,14 +478,15 @@ h6,
 .about-interests-card::before {
     content: '';
     position: absolute;
-    top: 0;
+    top: 1.6rem;
+    bottom: 1.6rem;
     left: 0;
     width: 3px;
-    height: 100%;
     background-color: var(--primary-color);
     transform: scaleY(0);
     transform-origin: bottom;
     transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    border-radius: 3px;
 }
 
 .about-bio-card:hover::before,
@@ -696,14 +697,15 @@ h6,
 .s-about__block::before {
     content: '';
     position: absolute;
-    top: 0;
+    top: 1.6rem;
+    bottom: 1.6rem;
     left: 0;
     width: 3px;
-    height: 100%;
     background-color: var(--primary-color);
     transform: scaleY(0);
     transform-origin: bottom;
     transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    border-radius: 3px;
 }
 
 .s-about__block:hover::before {
@@ -836,4 +838,18 @@ h6,
     color: var(--primary-color) !important;
     border-color: var(--primary-color) !important;
     transform: translateY(-2px) !important;
+}
+
+@media screen and (max-width: 480px) {
+    .lern {
+        flex-direction: column !important;
+        gap: 1.2rem !important;
+        width: 100% !important;
+    }
+    .btn-experience-primary,
+    .btn-experience-secondary {
+        width: 100% !important;
+        flex: none !important;
+        box-sizing: border-box !important;
+    }
 }
