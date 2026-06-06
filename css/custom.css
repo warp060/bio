@@ -681,6 +681,10 @@ h6,
     margin-top: 4.8rem !important;
 }
 
+.s-about__blocks {
+    gap: 3.2rem !important; /* Perfect spacing between Experience, Awards, and Skills cards */
+}
+
 /* Individual blocks style (Experience, Awards, Skills cards) */
 .s-about__block {
     background: linear-gradient(145deg, #161616, #0c0c0c) !important;
