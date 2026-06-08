@@ -942,3 +942,134 @@ h6,
         box-sizing: border-box !important;
     }
 }
+
+/* ===================================================================
+ * Premium Footer Styles
+ * =================================================================== */
+.s-footer {
+    background-color: var(--obsidian) !important;
+    border-top: 1px solid rgba(197, 168, 128, 0.15) !important;
+}
+
+.s-footer .section-header[data-num]::before {
+    color: rgba(197, 168, 128, 0.04) !important;
+}
+
+.s-footer__about p {
+    color: #a0a5b1 !important;
+    line-height: 1.8 !important;
+}
+
+.s-footer__site-links li a {
+    color: #a0a5b1 !important;
+    transition: all 0.3s ease !important;
+}
+
+.s-footer__site-links li a:hover {
+    color: var(--primary-color) !important;
+    padding-left: 5px !important;
+}
+
+.s-footer__site-links h5 {
+    color: #ffffff !important;
+    font-family: var(--font-sans) !important;
+    letter-spacing: 1px !important;
+    margin-bottom: 2rem !important;
+}
+
+/* Premium Footer Buttons */
+.btn-footer-primary,
+.btn-footer-secondary {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    border-radius: 50px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 2px !important;
+    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
+    margin-bottom: 1.5rem !important;
+}
+
+.btn-footer-primary {
+    background: var(--primary-color) !important;
+    color: var(--obsidian) !important;
+    border: none !important;
+    box-shadow: 0 10px 20px rgba(197, 168, 128, 0.15) !important;
+}
+
+.btn-footer-primary:hover,
+.btn-footer-primary:focus {
+    transform: translateY(-3px) !important;
+    box-shadow: 0 15px 30px rgba(197, 168, 128, 0.3) !important;
+    background: transparent !important;
+    border: 1px solid var(--primary-color) !important;
+    color: var(--primary-color) !important;
+}
+
+.btn-footer-secondary {
+    background: transparent !important;
+    color: var(--primary-color) !important;
+    border: 1px solid var(--primary-color) !important;
+}
+
+.btn-footer-secondary:hover,
+.btn-footer-secondary:focus {
+    background: var(--primary-color) !important;
+    color: var(--obsidian) !important;
+    transform: translateY(-3px) !important;
+}
+
+/* Social Icons */
+.s-footer__social a {
+    color: #ffffff !important;
+    border: 1px solid rgba(197, 168, 128, 0.3) !important;
+    transition: all 0.4s ease !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.s-footer__social a:hover,
+.s-footer__social a:focus {
+    background: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    color: var(--obsidian) !important;
+    transform: translateY(-5px) !important;
+    box-shadow: 0 10px 20px rgba(197, 168, 128, 0.2) !important;
+}
+
+.s-footer__bottom {
+    border-top: 1px solid rgba(197, 168, 128, 0.1) !important;
+    padding-top: 3rem !important;
+    margin-top: 3rem !important;
+}
+
+.ss-copyright span {
+    color: #888888 !important;
+}
+
+.ss-copyright a {
+    color: var(--primary-color) !important;
+    transition: all 0.3s ease !important;
+}
+
+.ss-copyright a:hover {
+    color: #ffffff !important;
+}
+
+/* Go Top Button */
+.ss-go-top a {
+    background-color: var(--primary-color) !important;
+    border-radius: 50% !important;
+    box-shadow: 0 5px 15px rgba(197, 168, 128, 0.3) !important;
+    transition: transform 0.4s ease !important;
+}
+.ss-go-top a svg {
+    fill: var(--obsidian) !important;
+}
+.ss-go-top a:hover,
+.ss-go-top a:focus {
+    transform: translateY(-5px) !important;
+    background-color: #ffffff !important;
+}
