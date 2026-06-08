@@ -833,7 +833,7 @@ h6,
     font-weight: 600 !important;
     letter-spacing: 2px !important;
     text-transform: uppercase !important;
-    padding: 1.2rem 2rem !important;
+    padding: 0.8rem 2rem !important;
     border-radius: 6px !important;
     border: 1px solid var(--primary-color) !important;
     transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1) !important;
@@ -861,7 +861,7 @@ h6,
     font-weight: 600 !important;
     letter-spacing: 2px !important;
     text-transform: uppercase !important;
-    padding: 1.2rem 2.4rem !important;
+    padding: 0.8rem 2.4rem !important;
     border-radius: 6px !important;
     border: 1px solid rgba(255, 255, 255, 0.25) !important;
     transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1) !important;
