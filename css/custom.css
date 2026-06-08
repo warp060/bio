@@ -86,6 +86,37 @@ h6,
     width: 100%;
 }
 
+/* Projects Section Styling */
+.s-projects {
+    padding-top: var(--vspace-5) !important;
+    padding-bottom: var(--vspace-5) !important;
+}
+
+.projects-header {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    margin-bottom: 4.8rem !important;
+}
+
+.projects-header h1 {
+    font-family: var(--font-serif) !important;
+    font-size: 4.2rem !important;
+    font-weight: 400 !important;
+    color: var(--obsidian) !important;
+    margin-top: 0 !important;
+    margin-bottom: 1rem !important;
+}
+
+.projects-header p {
+    font-family: var(--font-sans) !important;
+    font-size: 1.8rem !important;
+    color: #555555 !important;
+    margin-bottom: 0 !important;
+}
+
 /* Projects Grid Layout (Responsive) */
 .projects-grid {
     display: grid !important;
@@ -141,6 +172,7 @@ h6,
     height: 220px !important;
     object-fit: cover !important;
     object-position: center !important;
+    padding: 0 !important;
     transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1) !important;
 }
 
