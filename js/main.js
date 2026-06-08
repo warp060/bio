@@ -179,7 +179,13 @@
     const ssSwiper = function () {
 
         const testimonialsSwiper = new Swiper('.s-testimonials__slider', {
-
+            loop: true,
+            speed: 6000,
+            autoplay: {
+                delay: 0,
+                disableOnInteraction: false,
+                pauseOnMouseEnter: true,
+            },
             slidesPerView: 1,
             pagination: {
                 el: '.swiper-pagination',

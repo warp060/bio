@@ -130,6 +130,8 @@ h6,
     .projects-grid {
         grid-template-columns: 1fr !important;
         gap: 2.8rem !important;
+        padding-left: 1.5rem !important;
+        padding-right: 1.5rem !important;
     }
 }
 
@@ -150,8 +152,8 @@ h6,
 .card {
     background: #ffffff !important;
     border-radius: 12px !important;
-    border: 1px solid var(--card-border) !important;
-    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.015) !important;
+    border: 1px solid var(--primary-color) !important;
+    box-shadow: 0 4px 25px rgba(197, 168, 128, 0.1) !important;
     overflow: hidden !important;
     transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1) !important;
     display: flex !important;
@@ -162,7 +164,7 @@ h6,
 
 .card:hover {
     transform: translateY(-6px) !important;
-    box-shadow: 0 20px 40px rgba(197, 168, 128, 0.06) !important;
+    box-shadow: 0 20px 40px rgba(197, 168, 128, 0.25) !important;
     border-color: var(--primary-color) !important;
 }
 
@@ -231,18 +233,18 @@ h6,
 .btn-primary:link,
 .btn-primary:visited {
     display: inline-block !important;
-    background: #121212 !important;
-    /* Very dark charcoal/obsidian background */
+    background: #ffffff !important;
+    /* White background */
     color: var(--primary-color) !important;
     /* Champagne Gold text */
     font-family: var(--font-sans) !important;
     font-weight: 600 !important;
-    font-size: 1.25rem !important;
-    padding: 0.7rem 2rem !important;
+    font-size: 1.05rem !important;
+    padding: 0.5rem 1.6rem !important;
     border-radius: 4px !important;
     /* Slightly rounded corners (luxury box style) */
-    border: 1px solid rgba(255, 255, 255, 0.45) !important;
-    /* Thin Light Outline Border */
+    border: 1px solid var(--primary-color) !important;
+    /* Gold Outline Border */
     text-decoration: none !important;
     text-transform: uppercase !important;
     /* All-uppercase */
@@ -251,7 +253,7 @@ h6,
     transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1) !important;
     cursor: pointer !important;
     text-align: center !important;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05) !important;
 }
 
 .view-button:hover,
@@ -340,6 +342,11 @@ h6,
     transform: translateY(-5px) !important;
     box-shadow: 0 20px 45px rgba(197, 168, 128, 0.15) !important;
     border-color: var(--primary-color) !important;
+}
+
+/* Linear Transition for Premium Marquee Effect */
+.s-testimonials__slider .swiper-wrapper {
+    transition-timing-function: linear !important;
 }
 
 /* Author Alignment Fix (Responsive Padding) */
