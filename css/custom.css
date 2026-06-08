@@ -367,13 +367,14 @@ h6,
     flex-shrink: 0 !important;
     object-fit: cover !important;
     border-radius: 50% !important;
-    border: 3px solid var(--primary-color) !important;
+    border: none !important;
     box-shadow: 0 6px 20px rgba(197, 168, 128, 0.2) !important;
-    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1) !important;
+    transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1) !important;
 }
 
 .s-testimonials__slide:hover .s-testimonials__avatar {
-    transform: rotate(360deg) !important;
+    transform: scale(1.1) translateY(-4px) !important;
+    box-shadow: 0 15px 35px rgba(197, 168, 128, 0.5) !important;
 }
 
 /* Author Cite Typography */
