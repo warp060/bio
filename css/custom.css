@@ -1213,3 +1213,11 @@ h6,
     line-height: 1.8 !important;
     margin: 0 !important;
 }
+
+/* Fix massive top gap on desktop */
+.s-intro {
+    --content-padding-top: max(8rem, 10vh) !important;
+}
+.s-intro__content {
+    align-items: center !important;
+}
