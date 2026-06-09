@@ -1246,6 +1246,10 @@ h6,
         --content-padding-bottom: 0 !important;
         --content-padding-top: max(14rem, 20vh) !important;
     }
+    .about-bio-text {
+        font-size: 1.3rem !important;
+        line-height: 1.6 !important;
+    }
 }
 
 /* Typewriter Text Readability */
