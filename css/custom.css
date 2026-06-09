@@ -1242,6 +1242,9 @@ h6,
         opacity: 1 !important;
         font-weight: 500 !important;
     }
+    .s-intro__content-title {
+        text-shadow: 0px 4px 15px rgba(0, 0, 0, 0.8), 0px 0px 8px rgba(0, 0, 0, 0.5) !important;
+    }
 }
 
 /* Typewriter Blinking Cursor */
