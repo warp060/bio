@@ -47,7 +47,8 @@ h6,
     font-weight: 400 !important;
     font-size: 2.2rem !important;
     letter-spacing: 4px !important;
-    color: #ffffff !important; /* Premium White for Dark Header */
+    color: #ffffff !important;
+    /* Premium White for Dark Header */
     text-decoration: none !important;
     transition: all 0.3s ease !important;
     display: inline-block !important;
@@ -55,7 +56,8 @@ h6,
 }
 
 .logo-text:hover {
-    color: var(--primary-color) !important; /* Gold on Hover */
+    color: var(--primary-color) !important;
+    /* Gold on Hover */
     transform: translateY(-1px) !important;
 }
 
@@ -462,8 +464,10 @@ h6,
     background-color: rgba(17, 17, 17, 0.75) !important;
     backdrop-filter: blur(16px) !important;
     -webkit-backdrop-filter: blur(16px) !important;
-    border: 1px solid rgba(197, 168, 128, 0.12) !important; /* Elegant gold tint border */
-    border-radius: 12px !important; /* Slightly rounded float bar */
+    border: 1px solid rgba(197, 168, 128, 0.12) !important;
+    /* Elegant gold tint border */
+    border-radius: 12px !important;
+    /* Slightly rounded float bar */
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
     margin: 0 auto !important;
     max-width: var(--width-grid-max) !important;
@@ -472,7 +476,8 @@ h6,
 
 /* Make s-header itself floating properly */
 .s-header {
-    top: 2rem !important; /* Float a bit lower from the top */
+    top: 2rem !important;
+    /* Float a bit lower from the top */
     padding: 0 2rem !important;
 }
 
@@ -485,7 +490,8 @@ h6,
 }
 
 .s-header.sticky .s-header__inner {
-    border-radius: 0 !important; /* Solid edges when sticky/scrolled at the top */
+    border-radius: 0 !important;
+    /* Solid edges when sticky/scrolled at the top */
     border-top: none !important;
     border-left: none !important;
     border-right: none !important;
@@ -496,12 +502,14 @@ h6,
 @media screen and (max-width: 900px) {
     .s-header {
         --header-height: 58px !important;
-        top: 1rem !important; /* Floating header on mobile */
+        top: 1rem !important;
+        /* Floating header on mobile */
         padding: 0 1.5rem !important;
     }
 
     .s-header__inner {
-        border-radius: 8px !important; /* Tighter radius on mobile */
+        border-radius: 8px !important;
+        /* Tighter radius on mobile */
     }
 
     .s-header__block {
@@ -510,7 +518,8 @@ h6,
     }
 
     .s-header__logo {
-        left: 2.2rem !important; /* Correct padding on mobile */
+        left: 2.2rem !important;
+        /* Correct padding on mobile */
     }
 
     /* Glassmorphic Mobile Dropdown Menu */
@@ -671,7 +680,8 @@ h6,
 /* Interests Section */
 .about-interests-card {
     margin-bottom: 3.2rem;
-    padding: 0 !important; /* Managed by grid padding internally */
+    padding: 0 !important;
+    /* Managed by grid padding internally */
 }
 
 .about-interests-grid {
@@ -762,13 +772,15 @@ h6,
 
 /* Experience, Awards, Skills dark block container (abb1) */
 .abb1 {
-    background: transparent !important; /* Override standard ugly dark block */
+    background: transparent !important;
+    /* Override standard ugly dark block */
     padding: 0 !important;
     margin-top: 4.8rem !important;
 }
 
 .s-about__blocks {
-    gap: 3.2rem !important; /* Perfect spacing between Experience, Awards, and Skills cards */
+    gap: 3.2rem !important;
+    /* Perfect spacing between Experience, Awards, and Skills cards */
 }
 
 /* Individual blocks style (Experience, Awards, Skills cards) */
@@ -814,7 +826,8 @@ h6,
     font-size: 2.2rem !important;
     color: var(--primary-color) !important;
     margin-bottom: 2.4rem !important;
-    padding-left: 0 !important; /* Override layout padding */
+    padding-left: 0 !important;
+    /* Override layout padding */
 }
 
 /* Remove default sidebar vertical bar if any */
@@ -936,6 +949,7 @@ h6,
         gap: 1.2rem !important;
         width: 100% !important;
     }
+
     .btn-experience-primary,
     .btn-experience-secondary {
         width: 100% !important;
@@ -1080,9 +1094,11 @@ h6,
     box-shadow: 0 5px 15px rgba(197, 168, 128, 0.3) !important;
     transition: transform 0.4s ease !important;
 }
+
 .ss-go-top a svg {
     fill: var(--obsidian) !important;
 }
+
 .ss-go-top a:hover,
 .ss-go-top a:focus {
     transform: translateY(-5px) !important;
@@ -1095,7 +1111,8 @@ h6,
 .s-numbers {
     padding-top: 8rem !important;
     padding-bottom: 8rem !important;
-    background-color: #fcfcfc !important; /* Extremely soft light background */
+    background-color: #fcfcfc !important;
+    /* Extremely soft light background */
 }
 
 /* Grid Layout Fix for Perfect Gaps */
@@ -1219,6 +1236,7 @@ h6,
     --content-padding-top: max(8rem, 10vh) !important;
     --content-padding-bottom: 2rem !important;
 }
+
 .s-intro__content {
     align-items: center !important;
 }
@@ -1226,13 +1244,14 @@ h6,
 @media screen and (max-width: 800px) {
     .s-intro {
         --content-padding-bottom: 0 !important;
-        --content-padding-top: 6rem !important;
+        --content-padding-top: max(14rem, 20vh) !important;
     }
 }
 
 /* Typewriter Text Readability */
 #typewriter-text {
-    color: #444444 !important; /* Dark on desktop light background */
+    color: #444444 !important;
+    /* Dark on desktop light background */
 }
 
 @media screen and (max-width: 1200px) {
@@ -1242,6 +1261,7 @@ h6,
         opacity: 1 !important;
         font-weight: 500 !important;
     }
+
     .s-intro__content-title {
         text-shadow: 0px 4px 15px rgba(0, 0, 0, 0.8), 0px 0px 8px rgba(0, 0, 0, 0.5) !important;
     }
@@ -1254,7 +1274,15 @@ h6,
     opacity: 1;
     margin-left: 2px;
 }
+
 @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
 }
