@@ -303,6 +303,25 @@
     }; // end ssMoveTo
 
 
+    /* Typewriter Effect
+     * ------------------------------------------------------ */
+    const ssTypeWriter = function() {
+        const textElement = document.getElementById('typewriter-text');
+        if (!textElement) return;
+
+        const text = textElement.getAttribute('data-text');
+        let i = 0;
+        const speed = 40; // typing speed in milliseconds
+
+        setTimeout(function type() {
+            if (i < text.length) {
+                textElement.innerHTML += text.charAt(i);
+                i++;
+                setTimeout(type, speed);
+            }
+        }, 1200); // Wait for the intro animation to finish before starting
+    };
+
     /* Initialize
      * ------------------------------------------------------ */
     (function ssInit() {
@@ -315,6 +334,7 @@
         ssSwiper();
         ssAlertBoxes();
         ssMoveTo();
+        ssTypeWriter();
 
     })();
 
