@@ -1214,10 +1214,18 @@ h6,
     margin: 0 !important;
 }
 
-/* Fix massive top gap on desktop */
+/* Fix massive gaps on desktop and mobile */
 .s-intro {
     --content-padding-top: max(8rem, 10vh) !important;
+    --content-padding-bottom: 2rem !important;
 }
 .s-intro__content {
     align-items: center !important;
+}
+
+@media screen and (max-width: 800px) {
+    .s-intro {
+        --content-padding-bottom: 0 !important;
+        --content-padding-top: 6rem !important;
+    }
 }
