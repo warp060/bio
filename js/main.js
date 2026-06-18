@@ -322,6 +322,57 @@
         }, 1200); // Wait for the intro animation to finish before starting
     };
 
+    /* Intro Title Typewriter Effect
+     * ------------------------------------------------------ */
+    const ssIntroTitleTypewriter = function() {
+        const titleElement = document.getElementById('intro-title-typewriter');
+        if (!titleElement) return;
+
+        const words = [
+            "Full-Stack Web Developer",
+            "React Developer",
+            "Vibe Coder",
+            "Digital Marketer"
+        ];
+        let wordIndex = 0;
+        let charIndex = words[0].length;
+        let isDeleting = true;
+        const typingSpeed = 100;
+        const deletingSpeed = 60;
+        const pauseTime = 2000;
+        const nextWordDelay = 500;
+
+        function typeCycle() {
+            const currentWord = words[wordIndex];
+            
+            if (isDeleting) {
+                titleElement.textContent = currentWord.substring(0, charIndex - 1);
+                charIndex--;
+                
+                if (charIndex === 0) {
+                    isDeleting = false;
+                    wordIndex = (wordIndex + 1) % words.length;
+                    setTimeout(typeCycle, nextWordDelay);
+                } else {
+                    setTimeout(typeCycle, deletingSpeed);
+                }
+            } else {
+                const nextWord = words[wordIndex];
+                titleElement.textContent = nextWord.substring(0, charIndex + 1);
+                charIndex++;
+                
+                if (charIndex === nextWord.length) {
+                    isDeleting = true;
+                    setTimeout(typeCycle, pauseTime);
+                } else {
+                    setTimeout(typeCycle, typingSpeed);
+                }
+            }
+        }
+
+        setTimeout(typeCycle, pauseTime);
+    };
+
     /* Initialize
      * ------------------------------------------------------ */
     (function ssInit() {
@@ -335,6 +386,7 @@
         ssAlertBoxes();
         ssMoveTo();
         ssTypeWriter();
+        ssIntroTitleTypewriter();
 
     })();
 
