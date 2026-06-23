@@ -329,10 +329,10 @@
         if (!titleElement) return;
 
         const words = [
-            "Full-Stack Web Developer",
-            "React Developer",
-            "Vibe Coder",
-            "Digital Marketer"
+            "Full Stack Developer",
+            "React.js Developer",
+            "Digital Marketer",
+            "Vibe Coder"
         ];
         let wordIndex = 0;
         let charIndex = words[0].length;

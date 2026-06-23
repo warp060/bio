@@ -677,6 +677,17 @@ h6,
     margin-bottom: 0 !important;
 }
 
+.edu-date {
+    font-family: var(--font-sans) !important;
+    font-size: 1.3rem !important;
+    color: #999999 !important;
+    display: block;
+    margin-bottom: 1.2rem;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    font-style: italic;
+}
+
 /* Interests Section */
 .about-interests-card {
     margin-bottom: 3.2rem;
@@ -1072,6 +1083,7 @@ h6,
     border-top: 1px solid rgba(197, 168, 128, 0.1) !important;
     padding-top: 3rem !important;
     margin-top: 3rem !important;
+    position: relative !important;
 }
 
 .ss-copyright span {
@@ -1087,12 +1099,31 @@ h6,
     color: #ffffff !important;
 }
 
-/* Go Top Button */
+/* Go Top Button - Positioned at bottom-right of footer bottom */
+.ss-go-top {
+    position: absolute !important;
+    bottom: 0 !important;
+    right: 4rem !important;
+    transform: none !important;
+    z-index: 2 !important;
+}
+
+.ss-go-top span {
+    display: none !important;
+}
+
 .ss-go-top a {
     background-color: var(--primary-color) !important;
     border-radius: 50% !important;
     box-shadow: 0 5px 15px rgba(197, 168, 128, 0.3) !important;
     transition: transform 0.4s ease !important;
+    border: none !important;
+    height: 5rem !important;
+    width: 5rem !important;
+    margin: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
 }
 
 .ss-go-top a svg {
@@ -1103,6 +1134,39 @@ h6,
 .ss-go-top a:focus {
     transform: translateY(-5px) !important;
     background-color: #ffffff !important;
+}
+
+@media screen and (max-width: 1200px) {
+    .ss-go-top {
+        right: 3rem !important;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .ss-go-top {
+        right: 2.5rem !important;
+    }
+
+    .ss-go-top a {
+        height: 4.6rem !important;
+        width: 4.6rem !important;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .ss-go-top {
+        right: 2rem !important;
+    }
+
+    .ss-go-top a {
+        height: 4.2rem !important;
+        width: 4.2rem !important;
+    }
+}
+
+/* Ensure copyright text doesn't overlap with go-top button */
+.ss-copyright {
+    padding-right: 6rem !important;
 }
 
 /* ===================================================================
