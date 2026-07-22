@@ -393,3 +393,45 @@
 })(document.documentElement);
 
 
+/* Sync Projects dynamically from Admin Panel LocalStorage */
+(function initProjectSync() {
+    function syncProjects() {
+        const storedProjects = localStorage.getItem('admin_projects');
+        const projectsGrid = document.querySelector('.projects-grid');
+
+        if (storedProjects && projectsGrid) {
+            try {
+                const projects = JSON.parse(storedProjects);
+                if (Array.isArray(projects) && projects.length > 0) {
+                    projectsGrid.innerHTML = projects.map(proj => `
+                        <div class="card bg-white rounded-xl shadow-lg overflow-hidden">
+                            <img class="w-full h-48 object-cover ${proj.title && proj.title.toLowerCase().includes('t-shirt') ? 'tshirt-card-img' : ''}" 
+                                 src="${proj.image || 'bos.jpg'}" 
+                                 alt="${proj.title || 'Project'}" 
+                                 onerror="this.src='bos.jpg'">
+                            <div class="p-6 text-center">
+                                <h2 class="text-2xl font-semibold text-gray-800 mb-2">${proj.title}</h2>
+                                <p class="text-gray-600 mb-4">${proj.description}</p>
+                                <a href="${proj.url}" target="_blank" class="view-button">View Project</a>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+            } catch (e) {
+                console.error('Error syncing projects from localStorage:', e);
+            }
+        }
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', syncProjects);
+    } else {
+        syncProjects();
+    }
+
+    window.addEventListener('storage', (e) => {
+        if (e.key === 'admin_projects') {
+            syncProjects();
+        }
+    });
+})();
