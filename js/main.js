@@ -305,7 +305,7 @@
 
     /* Typewriter Effect
      * ------------------------------------------------------ */
-    const ssTypeWriter = function() {
+    const ssTypeWriter = function () {
         const textElement = document.getElementById('typewriter-text');
         if (!textElement) return;
 
@@ -324,7 +324,7 @@
 
     /* Intro Title Typewriter Effect
      * ------------------------------------------------------ */
-    const ssIntroTitleTypewriter = function() {
+    const ssIntroTitleTypewriter = function () {
         const titleElement = document.getElementById('intro-title-typewriter');
         if (!titleElement) return;
 
@@ -344,11 +344,11 @@
 
         function typeCycle() {
             const currentWord = words[wordIndex];
-            
+
             if (isDeleting) {
                 titleElement.textContent = currentWord.substring(0, charIndex - 1);
                 charIndex--;
-                
+
                 if (charIndex === 0) {
                     isDeleting = false;
                     wordIndex = (wordIndex + 1) % words.length;
@@ -360,7 +360,7 @@
                 const nextWord = words[wordIndex];
                 titleElement.textContent = nextWord.substring(0, charIndex + 1);
                 charIndex++;
-                
+
                 if (charIndex === nextWord.length) {
                     isDeleting = true;
                     setTimeout(typeCycle, pauseTime);
