@@ -193,7 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (messagesTableBody) messagesTableBody.innerHTML = rowsHtml;
         if (recentMessagesBody) recentMessagesBody.innerHTML = rowsHtml;
-        
+
         // Update notification badge count
         const unreadCount = messages.filter(m => m.status === 'unread').length;
         const msgBadge = document.getElementById('msg-nav-badge');
@@ -270,7 +270,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Expose window actions for dynamic buttons
-    window.editProject = function(id) {
+    window.editProject = function (id) {
         const proj = projects.find(p => p.id === id);
         if (!proj) return;
 
@@ -285,7 +285,7 @@ document.addEventListener('DOMContentLoaded', () => {
         projectModal.classList.add('active');
     };
 
-    window.deleteProject = function(id) {
+    window.deleteProject = function (id) {
         if (confirm('Are you sure you want to delete this project?')) {
             projects = projects.filter(p => p.id !== id);
             saveProjects();
@@ -293,7 +293,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    window.toggleMessageStatus = function(id) {
+    window.toggleMessageStatus = function (id) {
         const msg = messages.find(m => m.id === id);
         if (msg) {
             msg.status = msg.status === 'unread' ? 'read' : 'unread';
@@ -302,7 +302,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    window.deleteMessage = function(id) {
+    window.deleteMessage = function (id) {
         if (confirm('Delete this message?')) {
             messages = messages.filter(m => m.id !== id);
             saveMessages();
@@ -344,4 +344,36 @@ document.addEventListener('DOMContentLoaded', () => {
     renderProjects();
     renderMessages();
     updateDashboardStats();
+
+    // Mobile Sidebar Toggle
+    const sidebar = document.getElementById('admin-sidebar');
+    const sidebarOverlay = document.getElementById('sidebar-overlay');
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+
+    function openSidebar() {
+        if (sidebar) sidebar.classList.add('open');
+        if (sidebarOverlay) sidebarOverlay.classList.add('active');
+    }
+
+    function closeSidebar() {
+        if (sidebar) sidebar.classList.remove('open');
+        if (sidebarOverlay) sidebarOverlay.classList.remove('active');
+    }
+
+    if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener('click', openSidebar);
+    }
+
+    if (sidebarOverlay) {
+        sidebarOverlay.addEventListener('click', closeSidebar);
+    }
+
+    // Close sidebar when a nav item is clicked (mobile)
+    navItems.forEach(item => {
+        item.addEventListener('click', () => {
+            if (window.innerWidth <= 768) {
+                closeSidebar();
+            }
+        });
+    });
 });

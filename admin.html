@@ -1,24 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio Admin Panel | Mohammed Abbas R.Y.</title>
 
     <!-- Google Fonts & FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+
     <!-- Admin Security Auth Guard -->
     <script>
-        const isAuthenticated = localStorage.getItem('admin_authenticated') === 'true' || 
-                               sessionStorage.getItem('admin_authenticated') === 'true';
-        if (!isAuthenticated) {
-            window.location.href = 'login.html';
-        }
+        (function () {
+            const isAuth = localStorage.getItem('admin_authenticated') === 'true' ||
+                sessionStorage.getItem('admin_authenticated') === 'true';
+            if (!isAuth) {
+                window.location.href = 'login.html';
+            }
+
+            // Session Timeout: auto-logout after 30 minutes of inactivity
+            const SESSION_TIMEOUT = 30 * 60 * 1000;
+            let inactivityTimer;
+
+            function resetTimer() {
+                clearTimeout(inactivityTimer);
+                inactivityTimer = setTimeout(function () {
+                    alert('Session expired! Please login again.');
+                    logoutAdmin();
+                }, SESSION_TIMEOUT);
+            }
+
+            ['mousemove', 'keypress', 'click', 'scroll', 'touchstart'].forEach(function (evt) {
+                document.addEventListener(evt, resetTimer, true);
+            });
+            resetTimer();
+        })();
 
         function logoutAdmin() {
             localStorage.removeItem('admin_authenticated');
+            localStorage.removeItem('admin_user_email');
             sessionStorage.removeItem('admin_authenticated');
+            sessionStorage.removeItem('admin_user_email');
             window.location.href = 'login.html';
         }
     </script>
@@ -26,6 +48,7 @@
     <!-- Admin CSS -->
     <link rel="stylesheet" href="css/admin.css">
 </head>
+
 <body>
 
     <!-- Ambient Glowing Orbs -->
@@ -33,9 +56,12 @@
     <div class="bg-glow-2"></div>
 
     <div class="admin-wrapper">
-        
+
+        <!-- Mobile Sidebar Overlay -->
+        <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
         <!-- Sidebar Navigation -->
-        <aside class="sidebar">
+        <aside class="sidebar" id="admin-sidebar">
             <div class="sidebar-brand">
                 <div class="brand-icon">
                     <i class="fa-solid fa-gauge-high"></i>
@@ -48,12 +74,12 @@
 
             <div class="sidebar-menu">
                 <div class="menu-category">Main Menu</div>
-                
+
                 <a class="nav-item active" data-tab="dashboard">
                     <i class="fa-solid fa-chart-pie"></i>
                     <span>Dashboard</span>
                 </a>
-                
+
                 <a class="nav-item" data-tab="projects">
                     <i class="fa-solid fa-laptop-code"></i>
                     <span>Projects Manager</span>
@@ -88,9 +114,14 @@
 
         <!-- Main Content Area -->
         <main class="main-content">
-            
+
             <!-- Topbar Navigation -->
             <header class="topbar">
+                <!-- Mobile Hamburger -->
+                <button class="mobile-menu-btn" id="mobile-menu-btn" title="Menu">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
                 <div class="search-box">
                     <i class="fa-solid fa-magnifying-glass"></i>
                     <input type="text" class="search-input" placeholder="Search projects, messages...">
@@ -185,19 +216,22 @@
                     <!-- Traffic Analytics Mockup -->
                     <div class="glass-panel">
                         <div class="panel-header">
-                            <h3><i class="fa-solid fa-chart-line" style="color: var(--accent-gold-primary)"></i> Portfolio Visitor Growth</h3>
+                            <h3><i class="fa-solid fa-chart-line" style="color: var(--accent-gold-primary)"></i>
+                                Portfolio Visitor Growth</h3>
                             <span style="font-size: 0.85rem; color: var(--text-muted)">Last 30 Days</span>
                         </div>
                         <div class="chart-container">
                             <svg class="chart-svg" viewBox="0 0 500 150" preserveAspectRatio="none">
                                 <defs>
                                     <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="0%" stop-color="#d4af37" stop-opacity="0.35"/>
-                                        <stop offset="100%" stop-color="#d4af37" stop-opacity="0.0"/>
+                                        <stop offset="0%" stop-color="#d4af37" stop-opacity="0.35" />
+                                        <stop offset="100%" stop-color="#d4af37" stop-opacity="0.0" />
                                     </linearGradient>
                                 </defs>
-                                <path d="M0,130 Q70,90 140,110 T280,40 T420,70 T500,20 L500,150 L0,150 Z" fill="url(#chartGradient)"/>
-                                <path d="M0,130 Q70,90 140,110 T280,40 T420,70 T500,20" fill="none" stroke="#d4af37" stroke-width="3.5"/>
+                                <path d="M0,130 Q70,90 140,110 T280,40 T420,70 T500,20 L500,150 L0,150 Z"
+                                    fill="url(#chartGradient)" />
+                                <path d="M0,130 Q70,90 140,110 T280,40 T420,70 T500,20" fill="none" stroke="#d4af37"
+                                    stroke-width="3.5" />
                             </svg>
                         </div>
                     </div>
@@ -205,8 +239,11 @@
                     <!-- Recent Messages Table -->
                     <div class="glass-panel">
                         <div class="panel-header">
-                            <h3><i class="fa-solid fa-clock-rotate-left" style="color: var(--accent-emerald)"></i> Recent Messages</h3>
-                            <a href="#" onclick="document.querySelector('[data-tab=messages]').click()" style="color: var(--accent-primary); font-size: 0.85rem; font-weight: 600; text-decoration: none;">View All →</a>
+                            <h3><i class="fa-solid fa-clock-rotate-left" style="color: var(--accent-emerald)"></i>
+                                Recent Messages</h3>
+                            <a href="#" onclick="document.querySelector('[data-tab=messages]').click()"
+                                style="color: var(--accent-primary); font-size: 0.85rem; font-weight: 600; text-decoration: none;">View
+                                All →</a>
                         </div>
                         <div class="table-responsive">
                             <table class="custom-table">
@@ -288,27 +325,32 @@
                         <form id="bio-editor-form">
                             <div class="form-group">
                                 <label>Hero Banner Subtitle (Typewriter Text)</label>
-                                <textarea class="form-control" rows="3">Turning ideas into powerful, scalable, and user-friendly web applications.</textarea>
+                                <textarea class="form-control"
+                                    rows="3">Turning ideas into powerful, scalable, and user-friendly web applications.</textarea>
                             </div>
 
                             <div class="form-group">
                                 <label>Backend & Database Skills (Comma Separated)</label>
-                                <input type="text" class="form-control" value="Python, Node.js, Express.js, FastAPI, MySQL">
+                                <input type="text" class="form-control"
+                                    value="Python, Node.js, Express.js, FastAPI, MySQL">
                             </div>
 
                             <div class="form-group">
                                 <label>Frontend & Design Skills (Comma Separated)</label>
-                                <input type="text" class="form-control" value="React.js, JavaScript (ES6+), HTML5, CSS3, TailwindCSS, Responsive Design">
+                                <input type="text" class="form-control"
+                                    value="React.js, JavaScript (ES6+), HTML5, CSS3, TailwindCSS, Responsive Design">
                             </div>
 
                             <div class="form-group">
                                 <label>Strength Quote</label>
-                                <input type="text" class="form-control" value="✅ Supportive Team Member – Always ready to support teammates and contribute to team success.">
+                                <input type="text" class="form-control"
+                                    value="✅ Supportive Team Member – Always ready to support teammates and contribute to team success.">
                             </div>
 
                             <div class="form-group">
                                 <label>Weakness Mindfulness Quote</label>
-                                <input type="text" class="form-control" value="⚠️ Trusting Nature – I tend to trust people easily, but I'm learning to be more mindful.">
+                                <input type="text" class="form-control"
+                                    value="⚠️ Trusting Nature – I tend to trust people easily, but I'm learning to be more mindful.">
                             </div>
 
                             <button type="submit" class="btn-primary">
@@ -330,7 +372,8 @@
                     <div class="glass-panel" style="max-width: 750px;">
                         <div class="form-group">
                             <label>Website Title</label>
-                            <input type="text" class="form-control" value="Mohammed Abbas R.Y. | Full Stack Developer & Digital Marketer">
+                            <input type="text" class="form-control"
+                                value="Mohammed Abbas R.Y. | Full Stack Developer & Digital Marketer">
                         </div>
 
                         <div class="form-group">
@@ -373,12 +416,14 @@
 
                 <div class="form-group">
                     <label>Project Title</label>
-                    <input type="text" id="proj-title-input" class="form-control" placeholder="e.g. AI SaaS Dashboard" required>
+                    <input type="text" id="proj-title-input" class="form-control" placeholder="e.g. AI SaaS Dashboard"
+                        required>
                 </div>
 
                 <div class="form-group">
                     <label>Description</label>
-                    <textarea id="proj-desc-input" class="form-control" placeholder="Short description of the project" required></textarea>
+                    <textarea id="proj-desc-input" class="form-control" placeholder="Short description of the project"
+                        required></textarea>
                 </div>
 
                 <div class="form-group">
@@ -388,7 +433,8 @@
 
                 <div class="form-group">
                     <label>Demo URL</label>
-                    <input type="url" id="proj-url-input" class="form-control" placeholder="https://my-demo-app.com" required>
+                    <input type="url" id="proj-url-input" class="form-control" placeholder="https://my-demo-app.com"
+                        required>
                 </div>
 
                 <div class="form-group">
@@ -410,4 +456,5 @@
     <!-- Admin Script -->
     <script src="js/admin.js"></script>
 </body>
+
 </html>

@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login | Mohammed Abbas R.Y.</title>
 
     <!-- FontAwesome & Fonts -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
     <link rel="stylesheet" href="css/admin.css">
 
     <style>
@@ -103,6 +104,7 @@
         }
     </style>
 </head>
+
 <body>
 
     <div class="bg-glow-1"></div>
@@ -124,23 +126,31 @@
 
         <form id="login-form">
             <div class="form-group">
-                <label><i class="fa-solid fa-envelope" style="color: var(--accent-gold-primary); margin-right: 4px;"></i> Gmail / Email</label>
-                <input type="email" id="email-input" class="form-control" placeholder="abbas@gmail.com" value="abbas@gmail.com" required>
+                <label><i class="fa-solid fa-envelope"
+                        style="color: var(--accent-gold-primary); margin-right: 4px;"></i> Gmail / Email</label>
+                <input type="email" id="email-input" class="form-control" placeholder="abbas@gmail.com"
+                    value="abbas@gmail.com" required>
             </div>
 
             <div class="form-group">
-                <label><i class="fa-solid fa-lock" style="color: var(--accent-gold-primary); margin-right: 4px;"></i> Password</label>
+                <label><i class="fa-solid fa-lock" style="color: var(--accent-gold-primary); margin-right: 4px;"></i>
+                    Password</label>
                 <div class="password-toggle-group">
-                    <input type="password" id="password-input" class="form-control" placeholder="••••••••" value="admin123" required>
+                    <input type="password" id="password-input" class="form-control" placeholder="••••••••"
+                        value="admin123" required>
                     <i class="fa-solid fa-eye" id="toggle-pwd-btn"></i>
                 </div>
             </div>
 
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; font-size: 0.85rem;">
-                <label style="display: flex; align-items: center; gap: 0.4rem; cursor: pointer; color: var(--text-muted);">
-                    <input type="checkbox" id="remember-me" checked style="accent-color: var(--accent-gold-primary)"> Remember Me
+            <div
+                style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; font-size: 0.85rem;">
+                <label
+                    style="display: flex; align-items: center; gap: 0.4rem; cursor: pointer; color: var(--text-muted);">
+                    <input type="checkbox" id="remember-me" checked style="accent-color: var(--accent-gold-primary)">
+                    Remember Me
                 </label>
-                <span style="color: var(--accent-gold-dark); font-weight: 600; cursor: pointer;" onclick="alert('Default password is: admin123')">Forgot Password?</span>
+                <span style="color: var(--accent-gold-dark); font-weight: 600; cursor: pointer;"
+                    onclick="alert('Default password is: admin123')">Forgot Password?</span>
             </div>
 
             <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; padding: 0.85rem;">
@@ -154,6 +164,12 @@
     </div>
 
     <script>
+        // If already logged in, redirect to admin
+        if (localStorage.getItem('admin_authenticated') === 'true' || 
+            sessionStorage.getItem('admin_authenticated') === 'true') {
+            window.location.href = 'admin.html';
+        }
+
         // Password Visibility Toggle
         const pwdInput = document.getElementById('password-input');
         const toggleBtn = document.getElementById('toggle-pwd-btn');
@@ -168,20 +184,47 @@
             }
         });
 
+        // Login Security: Attempt Limiting
+        const MAX_ATTEMPTS = 5;
+        const LOCKOUT_MS = 2 * 60 * 1000; // 2 minutes
+        let failedAttempts = parseInt(sessionStorage.getItem('login_attempts') || '0');
+        let lockoutUntil = parseInt(sessionStorage.getItem('lockout_until') || '0');
+
         // Login Handler
         const loginForm = document.getElementById('login-form');
         const errorAlert = document.getElementById('error-alert');
         const errorText = document.getElementById('error-text');
+        const submitBtn = loginForm.querySelector('button[type="submit"]');
+
+        function checkLockout() {
+            if (Date.now() < lockoutUntil) {
+                const secsLeft = Math.ceil((lockoutUntil - Date.now()) / 1000);
+                errorText.textContent = `Too many attempts! Try again in ${secsLeft}s`;
+                errorAlert.style.display = 'flex';
+                submitBtn.disabled = true;
+                submitBtn.style.opacity = '0.5';
+                return true;
+            } else {
+                submitBtn.disabled = false;
+                submitBtn.style.opacity = '1';
+                return false;
+            }
+        }
+        checkLockout();
 
         loginForm.addEventListener('submit', (e) => {
             e.preventDefault();
+            if (checkLockout()) return;
+
             const email = document.getElementById('email-input').value.trim().toLowerCase();
             const password = document.getElementById('password-input').value;
             const rememberMe = document.getElementById('remember-me').checked;
 
             // Secure Admin Credentials Check
-            // Configurable: abbas@gmail.com / admin123
             if (email === 'abbas@gmail.com' && password === 'admin123') {
+                // Success: Reset attempts
+                sessionStorage.removeItem('login_attempts');
+                sessionStorage.removeItem('lockout_until');
                 errorAlert.style.display = 'none';
 
                 if (rememberMe) {
@@ -194,11 +237,38 @@
 
                 window.location.href = 'admin.html';
             } else {
-                errorText.textContent = 'Invalid Gmail or Password!';
+                failedAttempts++;
+                sessionStorage.setItem('login_attempts', failedAttempts.toString());
+
+                if (failedAttempts >= MAX_ATTEMPTS) {
+                    lockoutUntil = Date.now() + LOCKOUT_MS;
+                    sessionStorage.setItem('lockout_until', lockoutUntil.toString());
+                    errorText.textContent = 'Account locked! Too many failed attempts. Try again in 2 minutes.';
+                    checkLockout();
+                } else {
+                    const remaining = MAX_ATTEMPTS - failedAttempts;
+                    errorText.textContent = `Invalid Email or Password! ${remaining} attempt${remaining > 1 ? 's' : ''} remaining.`;
+                }
                 errorAlert.style.display = 'flex';
             }
         });
+
+        // Countdown timer if locked
+        setInterval(() => {
+            if (lockoutUntil > 0 && Date.now() >= lockoutUntil) {
+                failedAttempts = 0;
+                lockoutUntil = 0;
+                sessionStorage.removeItem('login_attempts');
+                sessionStorage.removeItem('lockout_until');
+                errorAlert.style.display = 'none';
+                submitBtn.disabled = false;
+                submitBtn.style.opacity = '1';
+            } else if (lockoutUntil > 0) {
+                checkLockout();
+            }
+        }, 1000);
     </script>
 
 </body>
+
 </html>
