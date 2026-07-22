@@ -8,6 +8,21 @@
     <!-- Google Fonts & FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <!-- Admin Security Auth Guard -->
+    <script>
+        const isAuthenticated = localStorage.getItem('admin_authenticated') === 'true' || 
+                               sessionStorage.getItem('admin_authenticated') === 'true';
+        if (!isAuthenticated) {
+            window.location.href = 'login.html';
+        }
+
+        function logoutAdmin() {
+            localStorage.removeItem('admin_authenticated');
+            sessionStorage.removeItem('admin_authenticated');
+            window.location.href = 'login.html';
+        }
+    </script>
+
     <!-- Admin CSS -->
     <link rel="stylesheet" href="css/admin.css">
 </head>
@@ -89,6 +104,10 @@
 
                     <button class="action-btn" title="Quick Refresh" onclick="location.reload()">
                         <i class="fa-solid fa-rotate-right"></i>
+                    </button>
+
+                    <button class="action-btn" title="Logout" onclick="logoutAdmin()" style="color: var(--accent-rose)">
+                        <i class="fa-solid fa-right-from-bracket"></i>
                     </button>
 
                     <div class="user-profile-menu">

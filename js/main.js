@@ -395,43 +395,65 @@
 
 /* Sync Projects dynamically from Admin Panel LocalStorage */
 (function initProjectSync() {
-    function syncProjects() {
-        const storedProjects = localStorage.getItem('admin_projects');
-        const projectsGrid = document.querySelector('.projects-grid');
 
-        if (storedProjects && projectsGrid) {
+    // Default projects - must match admin.js defaults exactly
+    const defaultProjects = [
+        { id: 1, title: "abbas threads", description: "Real-time full-stack e-commerce customizer store with interactive product preview.", image: "tshirt_project.png", url: "https://t-shirtmart24.vercel.app/" },
+        { id: 2, title: "Apple Web", description: "Minimalist Apple homepage clone featuring smooth animations and high-res asset rendering.", image: "ne.jpg", url: "https://clone-proj-2-abbas.netlify.app/" },
+        { id: 3, title: "Gym Web", description: "Fitness web app designed for client tracking, workout routines, and subscription plans.", image: "gy.jpg", url: "https://gymforabbas.netlify.app/" },
+        { id: 4, title: "Best Sign Up", description: "Modern interactive user authentication and onboarding flow.", image: "sign.jpg", url: "https://form-abbas.netlify.app/" },
+        { id: 5, title: "Acoder Blog", description: "Developer blogging platform for sharing technology tutorials and coding insights.", image: "bos.jpg", url: "https://acoderwritter.netlify.app/" },
+        { id: 6, title: "Calculator", description: "Accurate web calculator with custom themes and expression history.", image: "calcu.png", url: "https://welcomeacoder.netlify.app/" }
+    ];
+
+    function syncProjects() {
+        const projectsGrid = document.querySelector('.projects-grid');
+        if (!projectsGrid) return;
+
+        // Use localStorage if available, otherwise use embedded defaults
+        let projects;
+        const stored = localStorage.getItem('admin_projects');
+        if (stored) {
             try {
-                const projects = JSON.parse(storedProjects);
-                if (Array.isArray(projects) && projects.length > 0) {
-                    projectsGrid.innerHTML = projects.map(proj => `
-                        <div class="card bg-white rounded-xl shadow-lg overflow-hidden">
-                            <img class="w-full h-48 object-cover ${proj.title && proj.title.toLowerCase().includes('t-shirt') ? 'tshirt-card-img' : ''}" 
-                                 src="${proj.image || 'bos.jpg'}" 
-                                 alt="${proj.title || 'Project'}" 
-                                 onerror="this.src='bos.jpg'">
-                            <div class="p-6 text-center">
-                                <h2 class="text-2xl font-semibold text-gray-800 mb-2">${proj.title}</h2>
-                                <p class="text-gray-600 mb-4">${proj.description}</p>
-                                <a href="${proj.url}" target="_blank" class="view-button">View Project</a>
-                            </div>
-                        </div>
-                    `).join('');
-                }
+                projects = JSON.parse(stored);
             } catch (e) {
-                console.error('Error syncing projects from localStorage:', e);
+                projects = defaultProjects;
             }
+        } else {
+            projects = defaultProjects;
+            // Seed localStorage for future admin panel use
+            localStorage.setItem('admin_projects', JSON.stringify(defaultProjects));
+        }
+
+        if (Array.isArray(projects) && projects.length > 0) {
+            projectsGrid.innerHTML = projects.map(proj => `
+                <div class="card bg-white rounded-xl shadow-lg overflow-hidden">
+                    <img class="w-full h-48 object-cover ${proj.title && proj.title.toLowerCase().includes('threads') ? 'tshirt-card-img' : ''}" 
+                         src="${proj.image || 'bos.jpg'}" 
+                         alt="${proj.title || 'Project'}" 
+                         onerror="this.src='bos.jpg'">
+                    <div class="p-6 text-center">
+                        <h2 class="text-2xl font-semibold text-gray-800 mb-2">${proj.title}</h2>
+                        <p class="text-gray-600 mb-4">${proj.description}</p>
+                        <a href="${proj.url}" target="_blank" class="view-button">View Project</a>
+                    </div>
+                </div>
+            `).join('');
         }
     }
 
+    // Run sync when DOM is ready
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', syncProjects);
     } else {
         syncProjects();
     }
 
+    // Live cross-tab sync (admin panel open in another tab)
     window.addEventListener('storage', (e) => {
         if (e.key === 'admin_projects') {
             syncProjects();
         }
     });
 })();
+
