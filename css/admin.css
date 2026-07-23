@@ -294,11 +294,15 @@ body {
     top: 0;
     z-index: 90;
     box-shadow: 0 4px 20px rgba(212, 175, 55, 0.04);
+    overflow: hidden;
+    gap: 0.75rem;
 }
 
 .search-box {
     position: relative;
     width: 320px;
+    flex-shrink: 1;
+    min-width: 0;
 }
 
 .search-box i {
@@ -332,6 +336,7 @@ body {
     display: flex;
     align-items: center;
     gap: 1.25rem;
+    flex-shrink: 0;
 }
 
 .action-btn {
@@ -516,6 +521,7 @@ body {
     position: relative;
     overflow: hidden;
     box-shadow: var(--box-shadow-gold);
+    min-width: 0;
 }
 
 .stat-card:hover {
@@ -546,6 +552,11 @@ body {
     color: var(--accent-gold-dark);
 }
 
+.stat-info {
+    min-width: 0;
+    flex: 1;
+}
+
 .stat-info h3 {
     font-size: 1.7rem;
     font-weight: 800;
@@ -566,6 +577,8 @@ body {
     padding: 3px 8px;
     border-radius: 10px;
     margin-left: auto;
+    flex-shrink: 0;
+    white-space: nowrap;
 }
 
 .stat-trend.up {
@@ -922,8 +935,8 @@ textarea.form-control {
 /* Mobile Menu Toggle Button */
 .mobile-menu-btn {
     display: none;
-    width: 42px;
-    height: 42px;
+    width: 44px;
+    height: 44px;
     border-radius: var(--radius-md);
     background: rgba(212, 175, 55, 0.08);
     border: 1px solid var(--border-glass);
@@ -950,6 +963,70 @@ textarea.form-control {
     height: 100vh;
     background: rgba(0, 0, 0, 0.5);
     z-index: 99;
+    transition: opacity 0.3s ease;
+}
+
+/* Chart container — fluid responsive */
+.chart-container {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.chart-svg {
+    width: 100%;
+    height: auto;
+    min-height: 100px;
+}
+
+/* Touch-friendly minimum tap targets */
+@media (pointer: coarse) {
+    .action-btn,
+    .icon-btn,
+    .nav-item,
+    .mobile-menu-btn {
+        min-width: 44px;
+        min-height: 44px;
+    }
+
+    .icon-btn {
+        width: 44px;
+        height: 44px;
+    }
+
+    .action-btn {
+        width: 44px;
+        height: 44px;
+    }
+}
+
+/* ==============================
+   LARGE DESKTOP: 1400px+
+   ============================== */
+@media screen and (min-width: 1400px) {
+    .page-container {
+        max-width: 1300px;
+        margin: 0 auto;
+        padding: 2.5rem 3rem;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.75rem;
+    }
+
+    .admin-projects-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.75rem;
+    }
+
+    .section-header h1 {
+        font-size: 2rem;
+    }
+
+    .glass-panel {
+        padding: 2.25rem;
+    }
 }
 
 /* ==============================
@@ -959,28 +1036,34 @@ textarea.form-control {
     .sidebar {
         width: 70px;
     }
-    .sidebar .brand-text, 
-    .sidebar .menu-category, 
-    .sidebar .nav-item span, 
-    .sidebar .nav-badge, 
+
+    .sidebar .brand-text,
+    .sidebar .menu-category,
+    .sidebar .nav-item span,
+    .sidebar .nav-badge,
     .sidebar .back-to-site span {
         display: none;
     }
+
     .main-content {
         margin-left: 70px;
     }
+
     .nav-item {
         justify-content: center;
         padding: 1rem 0;
     }
+
     .sidebar-brand {
         justify-content: center;
         padding: 0;
     }
+
     .sidebar-footer {
         display: flex;
         justify-content: center;
     }
+
     .back-to-site {
         width: 44px;
         height: 44px;
@@ -988,16 +1071,125 @@ textarea.form-control {
         padding: 0;
         justify-content: center;
     }
+
     .stats-grid {
         grid-template-columns: repeat(2, 1fr);
     }
+
     .admin-projects-grid {
         grid-template-columns: repeat(2, 1fr);
     }
+
     .section-header {
         flex-direction: column;
         align-items: flex-start;
         gap: 1rem;
+    }
+
+    .page-container {
+        padding: 1.75rem;
+    }
+
+    /* Topbar — hide search & constrain actions */
+    .topbar {
+        padding: 0 1rem;
+    }
+
+    .search-box {
+        display: none;
+    }
+
+    .topbar-actions {
+        gap: 0.65rem;
+        flex-wrap: nowrap;
+        flex-shrink: 0;
+    }
+
+    .user-profile-menu div {
+        display: none;
+    }
+
+    .user-profile-menu {
+        padding: 0.3rem;
+        border-radius: 50%;
+    }
+
+    /* Stat cards — prevent trend badge overflow */
+    .stat-card {
+        overflow: hidden;
+        min-width: 0;
+    }
+
+    .stat-info {
+        min-width: 0;
+        flex: 1;
+    }
+
+    .stat-trend {
+        flex-shrink: 0;
+    }
+
+    /* Table — card-style fallback at tablet too */
+    .table-responsive {
+        overflow-x: visible;
+    }
+
+    .custom-table {
+        display: block;
+        width: 100%;
+    }
+
+    .custom-table thead {
+        display: none;
+    }
+
+    .custom-table tbody {
+        display: flex;
+        flex-direction: column;
+        gap: 0.85rem;
+    }
+
+    .custom-table tbody tr {
+        display: flex;
+        flex-direction: column;
+        background: #ffffff;
+        border: 1px solid var(--border-glass);
+        border-radius: var(--radius-md);
+        padding: 1rem;
+        gap: 0.5rem;
+        box-shadow: 0 2px 8px rgba(212, 175, 55, 0.06);
+    }
+
+    .custom-table tbody tr:hover {
+        border-color: var(--accent-gold-primary);
+    }
+
+    .custom-table td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.4rem 0;
+        font-size: 0.85rem;
+        border-bottom: 1px solid rgba(212, 175, 55, 0.08);
+        white-space: normal;
+        word-break: break-word;
+    }
+
+    .custom-table td:last-child {
+        border-bottom: none;
+        justify-content: flex-end;
+        padding-top: 0.6rem;
+    }
+
+    .custom-table td::before {
+        content: attr(data-label);
+        font-weight: 700;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: var(--accent-gold-dark);
+        margin-right: 1rem;
+        flex-shrink: 0;
     }
 }
 
@@ -1010,29 +1202,35 @@ textarea.form-control {
         width: 280px;
         transform: translateX(-100%);
         z-index: 200;
-        box-shadow: 10px 0 30px rgba(0,0,0,0.15);
+        box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
     }
+
     .sidebar.open {
         transform: translateX(0);
     }
-    .sidebar .brand-text, 
-    .sidebar .menu-category, 
-    .sidebar .nav-item span, 
-    .sidebar .nav-badge, 
+
+    .sidebar .brand-text,
+    .sidebar .menu-category,
+    .sidebar .nav-item span,
+    .sidebar .nav-badge,
     .sidebar .back-to-site span {
         display: flex;
     }
+
     .nav-item {
         justify-content: flex-start;
         padding: 0.85rem 1rem;
     }
+
     .sidebar-brand {
         justify-content: flex-start;
         padding: 0 1.5rem;
     }
+
     .sidebar-footer {
         display: block;
     }
+
     .back-to-site {
         width: 100%;
         height: auto;
@@ -1054,19 +1252,25 @@ textarea.form-control {
 
     /* Topbar */
     .topbar {
-        padding: 0 1rem;
+        padding: 0 0.75rem;
         gap: 0.5rem;
+        height: 56px;
     }
+
     .search-box {
         display: none;
     }
+
     .topbar-actions {
         gap: 0.5rem;
+        flex-shrink: 0;
     }
+
     .user-profile-menu {
         padding: 0.3rem;
         border-radius: 50%;
     }
+
     .user-profile-menu div {
         display: none;
     }
@@ -1075,26 +1279,56 @@ textarea.form-control {
     .page-container {
         padding: 1.25rem;
     }
+
     .section-header {
         flex-direction: column;
         align-items: flex-start;
         gap: 0.75rem;
     }
+
     .section-header h1 {
         font-size: 1.4rem;
     }
-    .btn-primary, .btn-secondary {
+
+    .section-header p {
+        font-size: 0.82rem;
+    }
+
+    .btn-primary,
+    .btn-secondary {
         width: 100%;
         justify-content: center;
     }
 
     /* Stat Cards */
     .stats-grid {
-        grid-template-columns: 1fr;
-        gap: 1rem;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.85rem;
     }
+
     .stat-card {
-        padding: 1.25rem;
+        padding: 1.15rem;
+        border-radius: var(--radius-md);
+    }
+
+    .stat-icon-wrapper {
+        width: 46px;
+        height: 46px;
+        font-size: 1.25rem;
+        border-radius: 12px;
+    }
+
+    .stat-info h3 {
+        font-size: 1.4rem;
+    }
+
+    .stat-info p {
+        font-size: 0.78rem;
+    }
+
+    .stat-trend {
+        font-size: 0.68rem;
+        padding: 2px 6px;
     }
 
     /* Projects Grid */
@@ -1108,16 +1342,25 @@ textarea.form-control {
         border-radius: var(--radius-md);
     }
 
-    /* Tables: horizontal scroll */
-    .custom-table {
-        display: block;
-        overflow-x: auto;
-        white-space: nowrap;
+    .panel-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
     }
-    .custom-table th,
+
+    .panel-header h3 {
+        font-size: 1.05rem;
+    }
+
+    /* Tables — already handled by 992px breakpoint,
+       just tighten spacing on mobile */
     .custom-table td {
-        padding: 0.75rem 0.6rem;
-        font-size: 0.8rem;
+        font-size: 0.82rem;
+        padding: 0.35rem 0;
+    }
+
+    .custom-table tbody tr {
+        padding: 0.85rem;
     }
 
     /* Modal */
@@ -1128,14 +1371,119 @@ textarea.form-control {
         overflow-y: auto;
     }
 
+    .modal-header h3 {
+        font-size: 1.15rem;
+    }
+
     /* Toast */
     .toast-container {
         bottom: 1rem;
         right: 1rem;
         left: 1rem;
     }
+
     .toast {
         font-size: 0.82rem;
+    }
+
+    /* Form adjustments */
+    .form-group label {
+        font-size: 0.82rem;
+    }
+
+    .form-control {
+        padding: 0.7rem 0.85rem;
+        font-size: 0.85rem;
+    }
+
+    .glass-panel[style*="max-width"] {
+        max-width: 100% !important;
+    }
+}
+
+/* ==============================
+   MID-RANGE PHONE: 480px — 768px
+   ============================== */
+@media screen and (max-width: 480px) {
+    .page-container {
+        padding: 1rem;
+    }
+
+    .section-header h1 {
+        font-size: 1.25rem;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.65rem;
+    }
+
+    .stat-card {
+        padding: 0.9rem;
+        gap: 0.75rem;
+    }
+
+    .stat-icon-wrapper {
+        width: 40px;
+        height: 40px;
+        font-size: 1.1rem;
+        border-radius: 10px;
+    }
+
+    .stat-info h3 {
+        font-size: 1.25rem;
+    }
+
+    .stat-info p {
+        font-size: 0.72rem;
+    }
+
+    .stat-trend {
+        display: none;
+    }
+
+    /* Project card adjustments */
+    .project-img-holder {
+        height: 140px;
+    }
+
+    .project-details {
+        padding: 1rem;
+    }
+
+    .project-details h4 {
+        font-size: 1rem;
+    }
+
+    .project-details p {
+        font-size: 0.82rem;
+        line-height: 1.45;
+    }
+
+    .tag-pill {
+        font-size: 0.68rem;
+        padding: 2px 7px;
+    }
+
+    /* Topbar */
+    .topbar-actions {
+        gap: 0.4rem;
+    }
+
+    .action-btn {
+        width: 38px;
+        height: 38px;
+        font-size: 0.9rem;
+    }
+
+    /* Panel header */
+    .panel-header h3 {
+        font-size: 0.95rem;
+    }
+
+    /* Chart */
+    .chart-container {
+        margin: 0 -0.5rem;
     }
 }
 
@@ -1146,22 +1494,159 @@ textarea.form-control {
     .page-container {
         padding: 0.75rem;
     }
+
     .section-header h1 {
-        font-size: 1.2rem;
+        font-size: 1.15rem;
     }
+
+    .section-header p {
+        font-size: 0.78rem;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 0.6rem;
+    }
+
+    .stat-card {
+        padding: 1rem;
+        gap: 1rem;
+        flex-direction: row;
+        align-items: center;
+    }
+
     .stat-info h3 {
-        font-size: 1.3rem;
+        font-size: 1.35rem;
     }
+
     .stat-icon-wrapper {
         width: 44px;
         height: 44px;
-        font-size: 1.2rem;
+        font-size: 1.15rem;
     }
+
+    .stat-trend {
+        display: inline-block;
+    }
+
     .topbar-actions {
-        gap: 0.35rem;
+        gap: 0.3rem;
     }
+
     .action-btn {
         width: 36px;
         height: 36px;
+    }
+
+    .topbar {
+        height: 56px;
+    }
+
+    /* Glass panels full bleed */
+    .glass-panel {
+        padding: 1rem;
+        border-radius: 12px;
+    }
+
+    /* Buttons */
+    .btn-primary,
+    .btn-secondary {
+        padding: 0.65rem 1rem;
+        font-size: 0.82rem;
+    }
+
+    /* Modal */
+    .modal-box {
+        width: 98%;
+        padding: 1.25rem;
+        border-radius: var(--radius-md);
+    }
+
+    /* Cards table mobile */
+    .custom-table td {
+        font-size: 0.8rem;
+        padding: 0.35rem 0;
+    }
+}
+
+/* ==============================
+   LANDSCAPE MOBILE OPTIMIZATION
+   ============================== */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+    .sidebar {
+        width: 220px;
+    }
+
+    .sidebar-brand {
+        height: 50px;
+    }
+
+    .nav-item {
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+    }
+
+    .topbar {
+        height: 50px;
+    }
+
+    .page-container {
+        padding: 1rem;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0.75rem;
+    }
+
+    .stat-card {
+        padding: 0.75rem;
+    }
+
+    .stat-info h3 {
+        font-size: 1.1rem;
+    }
+
+    .stat-icon-wrapper {
+        width: 36px;
+        height: 36px;
+        font-size: 1rem;
+    }
+
+    .section-header {
+        margin-bottom: 1rem;
+    }
+
+    .section-header h1 {
+        font-size: 1.3rem;
+    }
+
+    .modal-box {
+        max-height: 85vh;
+        overflow-y: auto;
+    }
+}
+
+/* ==============================
+   SAFE AREA INSETS (Notched Phones)
+   ============================== */
+@supports (padding: env(safe-area-inset-bottom)) {
+    .page-container {
+        padding-left: max(1.25rem, env(safe-area-inset-left));
+        padding-right: max(1.25rem, env(safe-area-inset-right));
+        padding-bottom: max(1.25rem, env(safe-area-inset-bottom));
+    }
+
+    .topbar {
+        padding-left: max(1rem, env(safe-area-inset-left));
+        padding-right: max(1rem, env(safe-area-inset-right));
+    }
+
+    .toast-container {
+        bottom: max(1rem, env(safe-area-inset-bottom));
+    }
+
+    .sidebar {
+        padding-bottom: env(safe-area-inset-bottom);
     }
 }

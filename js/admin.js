@@ -162,23 +162,23 @@ document.addEventListener('DOMContentLoaded', () => {
         `).join('');
     }
 
-    // Render Messages Table
+    // Render Messages Table (with data-label for mobile card fallback)
     const messagesTableBody = document.getElementById('messages-table-body');
     const recentMessagesBody = document.getElementById('recent-messages-body');
 
     function renderMessages() {
         const rowsHtml = messages.map(msg => `
             <tr data-id="${msg.id}">
-                <td><strong>${msg.sender}</strong><br><small style="color:#6b7280">${msg.email}</small></td>
-                <td>${msg.subject}</td>
-                <td style="max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${msg.message}</td>
-                <td>${msg.date}</td>
-                <td>
+                <td data-label="Sender"><strong>${msg.sender}</strong><br><small style="color:#6b7280">${msg.email}</small></td>
+                <td data-label="Subject">${msg.subject}</td>
+                <td data-label="Message" style="max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${msg.message}</td>
+                <td data-label="Date">${msg.date}</td>
+                <td data-label="Status">
                     <span class="badge ${msg.status === 'unread' ? 'badge-unread' : 'badge-read'}">
                         ${msg.status.toUpperCase()}
                     </span>
                 </td>
-                <td>
+                <td data-label="Actions">
                     <div class="icon-btn-group">
                         <button class="icon-btn" onclick="toggleMessageStatus(${msg.id})" title="Toggle Read Status">
                             <i class="fa-solid ${msg.status === 'unread' ? 'fa-envelope-open' : 'fa-envelope'}"></i>
@@ -345,6 +345,184 @@ document.addEventListener('DOMContentLoaded', () => {
     renderMessages();
     updateDashboardStats();
 
+    // ==========================================
+    // SEARCH FUNCTIONALITY
+    // ==========================================
+    const searchInput = document.querySelector('.search-input');
+    const searchBox = document.querySelector('.search-box');
+
+    if (searchInput && searchBox) {
+        // Create search results dropdown
+        const searchDropdown = document.createElement('div');
+        searchDropdown.className = 'search-dropdown';
+        searchDropdown.style.cssText = `
+            position: absolute; top: 100%; left: 0; right: 0; margin-top: 6px;
+            background: #ffffff; border: 1px solid var(--border-glass, rgba(212,175,55,0.2));
+            border-radius: 14px; box-shadow: 0 12px 30px rgba(212,175,55,0.15);
+            max-height: 350px; overflow-y: auto; z-index: 200;
+            display: none; padding: 0.5rem 0;
+        `;
+        searchBox.style.position = 'relative';
+        searchBox.appendChild(searchDropdown);
+
+        function performSearch(query) {
+            if (!query || query.length < 2) {
+                searchDropdown.style.display = 'none';
+                return;
+            }
+
+            const q = query.toLowerCase();
+            const results = [];
+
+            // Search projects
+            projects.forEach(proj => {
+                const matchFields = [proj.title, proj.description, ...proj.tags].join(' ').toLowerCase();
+                if (matchFields.includes(q)) {
+                    results.push({
+                        type: 'project',
+                        icon: 'fa-laptop-code',
+                        title: proj.title,
+                        subtitle: proj.tags.slice(0, 3).join(', '),
+                        tab: 'projects',
+                        id: proj.id
+                    });
+                }
+            });
+
+            // Search messages
+            messages.forEach(msg => {
+                const matchFields = [msg.sender, msg.email, msg.subject, msg.message].join(' ').toLowerCase();
+                if (matchFields.includes(q)) {
+                    results.push({
+                        type: 'message',
+                        icon: 'fa-envelope',
+                        title: msg.subject,
+                        subtitle: `From: ${msg.sender}`,
+                        tab: 'messages',
+                        id: msg.id
+                    });
+                }
+            });
+
+            // Render results
+            if (results.length === 0) {
+                searchDropdown.innerHTML = `
+                    <div style="padding: 1.25rem; text-align: center; color: #78716c; font-size: 0.88rem;">
+                        <i class="fa-solid fa-magnifying-glass" style="font-size: 1.5rem; color: rgba(212,175,55,0.3); display: block; margin-bottom: 0.5rem;"></i>
+                        No results found for "<strong>${query}</strong>"
+                    </div>
+                `;
+            } else {
+                searchDropdown.innerHTML = `
+                    <div style="padding: 0.4rem 1rem 0.3rem; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #a8a29e;">
+                        ${results.length} result${results.length > 1 ? 's' : ''} found
+                    </div>
+                    ${results.map(r => `
+                        <div class="search-result-item" data-tab="${r.tab}" data-id="${r.id}" style="
+                            display: flex; align-items: center; gap: 0.85rem; padding: 0.7rem 1rem;
+                            cursor: pointer; transition: all 0.2s ease; border-left: 3px solid transparent;
+                        " onmouseover="this.style.background='rgba(212,175,55,0.06)'; this.style.borderLeftColor='#d4af37';"
+                           onmouseout="this.style.background=''; this.style.borderLeftColor='transparent';">
+                            <div style="width: 36px; height: 36px; border-radius: 10px;
+                                background: rgba(212,175,55,0.1); display: flex; align-items: center;
+                                justify-content: center; flex-shrink: 0;">
+                                <i class="fa-solid ${r.icon}" style="color: #aa7c11; font-size: 0.85rem;"></i>
+                            </div>
+                            <div style="flex: 1; min-width: 0;">
+                                <div style="font-size: 0.88rem; font-weight: 600; color: #1c1917;
+                                    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${r.title}</div>
+                                <div style="font-size: 0.75rem; color: #78716c; margin-top: 1px;">${r.subtitle}</div>
+                            </div>
+                            <span style="font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+                                letter-spacing: 0.5px; padding: 2px 8px; border-radius: 6px;
+                                background: ${r.type === 'project' ? 'rgba(212,175,55,0.1)' : 'rgba(16,185,129,0.1)'};
+                                color: ${r.type === 'project' ? '#aa7c11' : '#10b981'};">
+                                ${r.type}
+                            </span>
+                        </div>
+                    `).join('')}
+                `;
+            }
+
+            searchDropdown.style.display = 'block';
+
+            // Add click handlers to results
+            searchDropdown.querySelectorAll('.search-result-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const tab = item.getAttribute('data-tab');
+                    const id = item.getAttribute('data-id');
+
+                    // Navigate to the tab
+                    const navItem = document.querySelector(`.nav-item[data-tab="${tab}"]`);
+                    if (navItem) navItem.click();
+
+                    // Highlight the matching element
+                    setTimeout(() => {
+                        let targetEl;
+                        if (tab === 'projects') {
+                            targetEl = document.querySelector(`.admin-project-card[data-id="${id}"]`);
+                        } else if (tab === 'messages') {
+                            targetEl = document.querySelector(`#tab-messages tr[data-id="${id}"]`);
+                        }
+
+                        if (targetEl) {
+                            targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            targetEl.style.outline = '2px solid #d4af37';
+                            targetEl.style.outlineOffset = '4px';
+                            targetEl.style.transition = 'outline 0.3s ease';
+                            setTimeout(() => {
+                                targetEl.style.outline = '';
+                                targetEl.style.outlineOffset = '';
+                            }, 2500);
+                        }
+                    }, 200);
+
+                    // Close dropdown & clear search
+                    searchDropdown.style.display = 'none';
+                    searchInput.value = '';
+                });
+            });
+        }
+
+        // Live search on typing (debounced)
+        let searchDebounce;
+        searchInput.addEventListener('input', () => {
+            clearTimeout(searchDebounce);
+            searchDebounce = setTimeout(() => {
+                performSearch(searchInput.value.trim());
+            }, 250);
+        });
+
+        // Search on Enter
+        searchInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                clearTimeout(searchDebounce);
+                performSearch(searchInput.value.trim());
+            }
+            if (e.key === 'Escape') {
+                searchDropdown.style.display = 'none';
+                searchInput.blur();
+            }
+        });
+
+        // Close dropdown on click outside
+        document.addEventListener('click', (e) => {
+            if (!searchBox.contains(e.target)) {
+                searchDropdown.style.display = 'none';
+            }
+        });
+
+        // Make search icon clickable
+        const searchIcon = searchBox.querySelector('i');
+        if (searchIcon) {
+            searchIcon.style.cursor = 'pointer';
+            searchIcon.addEventListener('click', () => {
+                performSearch(searchInput.value.trim());
+            });
+        }
+    }
+
     // Mobile Sidebar Toggle
     const sidebar = document.getElementById('admin-sidebar');
     const sidebarOverlay = document.getElementById('sidebar-overlay');
@@ -353,11 +531,13 @@ document.addEventListener('DOMContentLoaded', () => {
     function openSidebar() {
         if (sidebar) sidebar.classList.add('open');
         if (sidebarOverlay) sidebarOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Prevent background scroll
     }
 
     function closeSidebar() {
         if (sidebar) sidebar.classList.remove('open');
         if (sidebarOverlay) sidebarOverlay.classList.remove('active');
+        document.body.style.overflow = ''; // Restore scroll
     }
 
     if (mobileMenuBtn) {
@@ -376,4 +556,55 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    // Auto-close sidebar on window resize past mobile breakpoint
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+            if (window.innerWidth > 768) {
+                closeSidebar();
+            }
+        }, 150);
+    });
+
+    // Swipe-to-close sidebar gesture (touch devices)
+    if (sidebar) {
+        let touchStartX = 0;
+        let touchCurrentX = 0;
+        let isSwiping = false;
+
+        sidebar.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+            isSwiping = true;
+        }, { passive: true });
+
+        sidebar.addEventListener('touchmove', (e) => {
+            if (!isSwiping) return;
+            touchCurrentX = e.touches[0].clientX;
+            const diff = touchStartX - touchCurrentX;
+
+            // Only allow swiping left (to close)
+            if (diff > 0 && sidebar.classList.contains('open')) {
+                const translateX = Math.min(diff, 280);
+                sidebar.style.transform = `translateX(-${translateX}px)`;
+                sidebar.style.transition = 'none';
+            }
+        }, { passive: true });
+
+        sidebar.addEventListener('touchend', () => {
+            if (!isSwiping) return;
+            isSwiping = false;
+            const diff = touchStartX - touchCurrentX;
+
+            sidebar.style.transition = '';
+            sidebar.style.transform = '';
+
+            // Close if swiped more than 80px left
+            if (diff > 80 && sidebar.classList.contains('open')) {
+                closeSidebar();
+            }
+        }, { passive: true });
+    }
 });
+

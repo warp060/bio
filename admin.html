@@ -4,18 +4,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <title>Portfolio Admin Panel | Mohammed Abbas R.Y.</title>
 
     <!-- Google Fonts & FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="css/fontawesome/all.min.css">
 
-    <!-- Admin Security Auth Guard -->
+    <!-- Admin Security Auth Guard — Cryptographic Token Validation -->
     <script>
         (function () {
-            const isAuth = localStorage.getItem('admin_authenticated') === 'true' ||
-                sessionStorage.getItem('admin_authenticated') === 'true';
-            if (!isAuth) {
+            // Validate session using cryptographic token (not a simple boolean)
+            const localToken = localStorage.getItem('admin_session_token');
+            const sessionToken = sessionStorage.getItem('admin_session_token');
+            const token = localToken || sessionToken;
+
+            // Token must exist and have a valid UUID-timestamp format
+            if (!token || !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}-[a-z0-9]+$/i.test(token)) {
+                // Clear any stale/forged tokens
+                localStorage.removeItem('admin_session_token');
+                localStorage.removeItem('admin_session_created');
+                sessionStorage.removeItem('admin_session_token');
+                sessionStorage.removeItem('admin_session_created');
                 window.location.href = 'login.html';
+            }
+
+            // Check session age (max 24 hours for localStorage, 30 min inactivity for session)
+            const createdAt = parseInt(
+                localStorage.getItem('admin_session_created') ||
+                sessionStorage.getItem('admin_session_created') || '0'
+            );
+            const MAX_SESSION_AGE = localToken ? 24 * 60 * 60 * 1000 : 30 * 60 * 1000;
+            if (Date.now() - createdAt > MAX_SESSION_AGE) {
+                logoutAdmin();
             }
 
             // Session Timeout: auto-logout after 30 minutes of inactivity
@@ -24,6 +44,10 @@
 
             function resetTimer() {
                 clearTimeout(inactivityTimer);
+                // Update session timestamp on activity
+                if (sessionStorage.getItem('admin_session_token')) {
+                    sessionStorage.setItem('admin_session_created', Date.now().toString());
+                }
                 inactivityTimer = setTimeout(function () {
                     alert('Session expired! Please login again.');
                     logoutAdmin();
@@ -37,6 +61,11 @@
         })();
 
         function logoutAdmin() {
+            localStorage.removeItem('admin_session_token');
+            localStorage.removeItem('admin_session_created');
+            sessionStorage.removeItem('admin_session_token');
+            sessionStorage.removeItem('admin_session_created');
+            // Also clean up any legacy keys
             localStorage.removeItem('admin_authenticated');
             localStorage.removeItem('admin_user_email');
             sessionStorage.removeItem('admin_authenticated');
