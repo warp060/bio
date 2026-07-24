@@ -1367,3 +1367,10 @@ h6,
         opacity: 0;
     }
 }
+
+/* Adjust intro image flexibility on mobile devices */
+@media screen and (max-width: 1080px) {
+    .s-intro__content-media img {
+        object-position: top center !important;
+    }
+}

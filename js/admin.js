@@ -310,12 +310,80 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Save Profile & Bio Form
+    // ==========================================
+    // PAGE MODIFICATION SYNC LOGIC
+    // ==========================================
+
+    // 1. Bio & Skills Editor
     const bioForm = document.getElementById('bio-editor-form');
+    const bioHeroInput = document.getElementById('bio-hero-input');
+    const bioBackendInput = document.getElementById('bio-backend-input');
+    const bioFrontendInput = document.getElementById('bio-frontend-input');
+    const bioStrengthInput = document.getElementById('bio-strength-input');
+    const bioWeaknessInput = document.getElementById('bio-weakness-input');
+
+    // Load existing Bio data
+    const savedBio = localStorage.getItem('admin_bio');
+    if (savedBio) {
+        try {
+            const bioData = JSON.parse(savedBio);
+            if (bioHeroInput) bioHeroInput.value = bioData.hero || '';
+            if (bioBackendInput) bioBackendInput.value = bioData.backend || '';
+            if (bioFrontendInput) bioFrontendInput.value = bioData.frontend || '';
+            if (bioStrengthInput) bioStrengthInput.value = bioData.strength || '';
+            if (bioWeaknessInput) bioWeaknessInput.value = bioData.weakness || '';
+        } catch (e) {
+            console.error('Error loading bio data', e);
+        }
+    }
+
     if (bioForm) {
         bioForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            showToast('Profile & Bio settings saved to memory!');
+            const bioData = {
+                hero: bioHeroInput.value,
+                backend: bioBackendInput.value,
+                frontend: bioFrontendInput.value,
+                strength: bioStrengthInput.value,
+                weakness: bioWeaknessInput.value
+            };
+            localStorage.setItem('admin_bio', JSON.stringify(bioData));
+            showToast('Profile & Bio settings saved and applied to live site!');
+        });
+    }
+
+    // 2. Site Settings Editor
+    const settingsForm = document.getElementById('settings-form');
+    const settingTitleInput = document.getElementById('setting-title-input');
+    const settingGithubInput = document.getElementById('setting-github-input');
+    const settingLinkedinInput = document.getElementById('setting-linkedin-input');
+    const settingMaintenanceInput = document.getElementById('setting-maintenance-input');
+
+    // Load existing Settings data
+    const savedSettings = localStorage.getItem('admin_settings');
+    if (savedSettings) {
+        try {
+            const settingsData = JSON.parse(savedSettings);
+            if (settingTitleInput) settingTitleInput.value = settingsData.title || '';
+            if (settingGithubInput) settingGithubInput.value = settingsData.github || '';
+            if (settingLinkedinInput) settingLinkedinInput.value = settingsData.linkedin || '';
+            if (settingMaintenanceInput) settingMaintenanceInput.value = settingsData.maintenance || 'off';
+        } catch (e) {
+            console.error('Error loading settings data', e);
+        }
+    }
+
+    if (settingsForm) {
+        settingsForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const settingsData = {
+                title: settingTitleInput.value,
+                github: settingGithubInput.value,
+                linkedin: settingLinkedinInput.value,
+                maintenance: settingMaintenanceInput.value
+            };
+            localStorage.setItem('admin_settings', JSON.stringify(settingsData));
+            showToast('Global settings saved successfully!');
         });
     }
 

@@ -354,31 +354,31 @@
                         <form id="bio-editor-form">
                             <div class="form-group">
                                 <label>Hero Banner Subtitle (Typewriter Text)</label>
-                                <textarea class="form-control"
+                                <textarea id="bio-hero-input" class="form-control"
                                     rows="3">Turning ideas into powerful, scalable, and user-friendly web applications.</textarea>
                             </div>
 
                             <div class="form-group">
                                 <label>Backend & Database Skills (Comma Separated)</label>
-                                <input type="text" class="form-control"
+                                <input type="text" id="bio-backend-input" class="form-control"
                                     value="Python, Node.js, Express.js, FastAPI, MySQL">
                             </div>
 
                             <div class="form-group">
                                 <label>Frontend & Design Skills (Comma Separated)</label>
-                                <input type="text" class="form-control"
+                                <input type="text" id="bio-frontend-input" class="form-control"
                                     value="React.js, JavaScript (ES6+), HTML5, CSS3, TailwindCSS, Responsive Design">
                             </div>
 
                             <div class="form-group">
                                 <label>Strength Quote</label>
-                                <input type="text" class="form-control"
+                                <input type="text" id="bio-strength-input" class="form-control"
                                     value="✅ Supportive Team Member – Always ready to support teammates and contribute to team success.">
                             </div>
 
                             <div class="form-group">
                                 <label>Weakness Mindfulness Quote</label>
-                                <input type="text" class="form-control"
+                                <input type="text" id="bio-weakness-input" class="form-control"
                                     value="⚠️ Trusting Nature – I tend to trust people easily, but I'm learning to be more mindful.">
                             </div>
 
@@ -399,33 +399,35 @@
                     </div>
 
                     <div class="glass-panel" style="max-width: 750px;">
-                        <div class="form-group">
-                            <label>Website Title</label>
-                            <input type="text" class="form-control"
-                                value="Mohammed Abbas R.Y. | Full Stack Developer & Digital Marketer">
-                        </div>
+                        <form id="settings-form">
+                            <div class="form-group">
+                                <label>Website Title</label>
+                                <input type="text" id="setting-title-input" class="form-control"
+                                    value="Mohammed Abbas R.Y. | Full Stack Developer & Digital Marketer">
+                            </div>
 
-                        <div class="form-group">
-                            <label>GitHub Repository URL</label>
-                            <input type="text" class="form-control" value="https://github.com/warp060/bio">
-                        </div>
+                            <div class="form-group">
+                                <label>GitHub Profile URL</label>
+                                <input type="text" id="setting-github-input" class="form-control" value="https://github.com/abbasking11">
+                            </div>
 
-                        <div class="form-group">
-                            <label>LinkedIn Profile URL</label>
-                            <input type="text" class="form-control" value="https://linkedin.com/in/mohammed-abbas">
-                        </div>
+                            <div class="form-group">
+                                <label>LinkedIn Profile URL</label>
+                                <input type="text" id="setting-linkedin-input" class="form-control" value="https://www.linkedin.com/in/mohammedabbas-ry">
+                            </div>
 
-                        <div class="form-group">
-                            <label>Maintenance Mode</label>
-                            <select class="form-control">
-                                <option value="off" selected>Disabled (Site Live)</option>
-                                <option value="on">Enabled (Under Maintenance Page)</option>
-                            </select>
-                        </div>
+                            <div class="form-group">
+                                <label>Maintenance Mode</label>
+                                <select id="setting-maintenance-input" class="form-control">
+                                    <option value="off" selected>Disabled (Site Live)</option>
+                                    <option value="on">Enabled (Under Maintenance Page)</option>
+                                </select>
+                            </div>
 
-                        <button class="btn-primary" onclick="alert('Settings saved!')">
-                            <i class="fa-solid fa-check"></i> Save Settings
-                        </button>
+                            <button type="submit" class="btn-primary">
+                                <i class="fa-solid fa-check"></i> Save Settings
+                            </button>
+                        </form>
                     </div>
                 </section>
 
