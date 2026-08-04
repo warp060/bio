@@ -406,24 +406,11 @@
         { id: 6, title: "Calculator", description: "Accurate web calculator with custom themes and expression history.", image: "calcu.png", url: "https://welcomeacoder.netlify.app/" }
     ];
 
-    function syncProjects() {
+    function renderProjects() {
         const projectsGrid = document.querySelector('.projects-grid');
         if (!projectsGrid) return;
 
-        // Use localStorage if available, otherwise use embedded defaults
-        let projects;
-        const stored = localStorage.getItem('admin_projects');
-        if (stored) {
-            try {
-                projects = JSON.parse(stored);
-            } catch (e) {
-                projects = defaultProjects;
-            }
-        } else {
-            projects = defaultProjects;
-            // Seed localStorage for future admin panel use
-            localStorage.setItem('admin_projects', JSON.stringify(defaultProjects));
-        }
+        let projects = defaultProjects;
 
         if (Array.isArray(projects) && projects.length > 0) {
             projectsGrid.innerHTML = projects.map(proj => `
@@ -444,110 +431,9 @@
 
     // Run sync when DOM is ready
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', syncProjects);
+        document.addEventListener('DOMContentLoaded', renderProjects);
     } else {
-        syncProjects();
+        renderProjects();
     }
-
-    // Live cross-tab sync (admin panel open in another tab)
-    window.addEventListener('storage', (e) => {
-        if (e.key === 'admin_projects') {
-            syncProjects();
-        }
-    });
-})();
-
-/* Sync Global Bio and Settings from Admin Panel LocalStorage */
-(function initContentSync() {
-    function syncBio() {
-        const savedBio = localStorage.getItem('admin_bio');
-        if (!savedBio) return;
-
-        try {
-            const bioData = JSON.parse(savedBio);
-            
-            // Hero Typewriter
-            if (bioData.hero) {
-                const tw = document.getElementById('typewriter-text');
-                if (tw) tw.setAttribute('data-text', bioData.hero);
-            }
-            
-            // Backend Skills
-            if (bioData.backend) {
-                const be = document.getElementById('backend-skills-element');
-                if (be) be.textContent = `- ${bioData.backend.replace(/,\s*/g, ' · ')}`;
-            }
-            
-            // Frontend Skills
-            if (bioData.frontend) {
-                const fe = document.getElementById('frontend-skills-element');
-                if (fe) fe.textContent = `- ${bioData.frontend.replace(/,\s*/g, ' · ')}`;
-            }
-            
-            // Strength Quote
-            if (bioData.strength) {
-                const st = document.getElementById('strength-element');
-                if (st) st.textContent = bioData.strength;
-            }
-            
-            // Weakness Quote
-            if (bioData.weakness) {
-                const wk = document.getElementById('weakness-element');
-                if (wk) wk.textContent = bioData.weakness;
-            }
-
-        } catch (e) {
-            console.error('Error syncing bio content', e);
-        }
-    }
-
-    function syncSettings() {
-        const savedSettings = localStorage.getItem('admin_settings');
-        if (!savedSettings) return;
-
-        try {
-            const settingsData = JSON.parse(savedSettings);
-
-            // Website Title
-            if (settingsData.title) {
-                const titleEl = document.getElementById('site-title-element');
-                if (titleEl) titleEl.textContent = settingsData.title;
-            }
-
-            // LinkedIn URLs
-            if (settingsData.linkedin) {
-                const liText = document.getElementById('linkedin-text-link');
-                const liIcon = document.getElementById('linkedin-icon-link');
-                if (liText) liText.href = settingsData.linkedin;
-                if (liIcon) liIcon.href = settingsData.linkedin;
-            }
-
-            // Github URL
-            if (settingsData.github) {
-                const ghIcon = document.getElementById('github-icon-link');
-                if (ghIcon) ghIcon.href = settingsData.github;
-            }
-            
-        } catch (e) {
-            console.error('Error syncing settings content', e);
-        }
-    }
-
-    // Run sync when DOM is ready
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => {
-            syncBio();
-            syncSettings();
-        });
-    } else {
-        syncBio();
-        syncSettings();
-    }
-
-    // Live cross-tab sync (admin panel open in another tab)
-    window.addEventListener('storage', (e) => {
-        if (e.key === 'admin_bio') syncBio();
-        if (e.key === 'admin_settings') syncSettings();
-    });
 })();
 
